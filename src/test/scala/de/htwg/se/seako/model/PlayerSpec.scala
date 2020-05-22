@@ -18,7 +18,19 @@ class PlayerSpec extends WordSpec with Matchers{
       "to String" in {
         PlayerBob.toString should be ("Bob")
       }
+
+      "new" should {
+        val player = Player("Your Name")
+        "have a name" in {
+          player.name should be("Your Name")
+        }
+        "have a nice String representation" in {
+          player.toString should be("Your Name")
+        }
+      }
     }
+
+
   }
 
 }
