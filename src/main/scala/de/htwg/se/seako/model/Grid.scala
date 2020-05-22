@@ -1,14 +1,11 @@
 package de.htwg.se.seako.model
 
-case class Grid(private val cells:Matrix[Cell]) {
-  def this(size:Int) = this(new Matrix[Cell](size, Cell(0)))
-  val size:Int = cells.size
-  def cell(row:Int, col:Int):Cell = cells.cell(row, col)
-  def set(row:Int, col:Int, value:Int):Grid = copy(cells.replaceCell(row, col, Cell(value)))
-  def row(row:Int):House = House(cells.rows(row))
-  def col(col:Int):House = House(cells.rows.map(row=>row(col)))
-}
+case class Grid[T](rows:Vector[Vector[T]]) {
+  def this(size:Int, filling:T) = this(Vector.tabulate(size,size){(row,col) => filling})
+  val size:Int = rows.size
+  def cell(row:Int, col:Int):T = rows (row)(col)
+  def fill(filling:T):Grid[T] = copy( Vector.tabulate(size, size){ (row, col) => filling})
+  def replaceCell(row:Int, col:Int, cell:T):Grid[T] = copy(rows.updated(row, rows(row).updated(col,cell)))
 
-case class House(private val cells:Vector[Cell]) {
-  def cell(index:Int):Cell = cells(index)
+
 }
