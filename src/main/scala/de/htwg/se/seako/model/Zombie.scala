@@ -1,5 +1,6 @@
 package de.htwg.se.seako.model
 
-case class Zombie(value: Int) {
-  def isAlive: Boolean = value > 0
+case class Zombie(health: Int, attack: Int) {
+  def isAlive: Boolean = health > 0
+  def hasAttack: Boolean = attack > 0
 }
