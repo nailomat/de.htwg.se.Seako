@@ -1,4 +1,3 @@
-import scala.math.sqrt
 case class Cell(value: Int) {
   def isSet:Boolean = value != 0
 }
@@ -8,15 +7,6 @@ cell1.isSet
 
 val cell2 = Cell(4)
 cell2.isSet
-
-
-case class House(cells:Vector[Cell])
-
-val house = House(Vector(cell1, cell2))
-house.cells(0)
-house.cells(0)
-house.cells(1)
-house.cells(1)
 
 case class Grid[T] (rows:Vector[Vector[T]]) {
   def this(size:Int, filling:T) = this(Vector.tabulate(size, size){
