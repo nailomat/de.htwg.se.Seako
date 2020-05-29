@@ -11,6 +11,11 @@ class Tui {
       case "small" => new Grid[Cell](5,Cell(0))
       case "medium" => new Grid[Cell](10,Cell(0))
       case "big" => new Grid[Cell](20,Cell(0))
+      case _ => {
+        input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
+          case _ => println("unknown command")
+        }
+      }
     }
 
   }
