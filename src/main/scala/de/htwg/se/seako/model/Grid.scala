@@ -7,5 +7,16 @@ case class Grid[T](rows:Vector[Vector[T]]) {
   def fill(filling:T):Grid[T] = copy( Vector.tabulate(size, size){ (row, col) => filling})
   def replaceCell(row:Int, col:Int, cell:T):Grid[T] = copy(rows.updated(row, rows(row).updated(col,cell)))
 
+  override def toString: String = {
 
+    var output = "\n"
+
+    for (row <- 0 until size) {
+      for (col <- 0 until size) {
+        output = output + cell(row,col).toString + "\t"
+      }
+      output = output + "\n"
+    }
+    output
+  }
 }
