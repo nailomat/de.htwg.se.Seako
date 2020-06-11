@@ -1,11 +1,11 @@
 package de.htwg.se.seako
 
 import de.htwg.se.seako.aview.Tui
-import de.htwg.se.seako.model.{Cell, Grid, Player, Terrain, Zombie}
+import de.htwg.se.seako.model.{Cell, Fog, Grid, Player, Terrain, Zombie}
 
 object Seako {
   def main(args: Array[String]): Unit = {
-    val cell = new Cell(List[Player](), List[Zombie](Zombie(1,0)),Terrain(1))
+    val cell = new Cell(List[Player](), List[Zombie](Zombie(1,0)),Terrain(1), Fog(0))
     var grid = new Grid[Cell](1, cell)
     val tui = new Tui()
     var input: String = ""
