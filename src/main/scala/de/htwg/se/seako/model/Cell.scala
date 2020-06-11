@@ -14,16 +14,19 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
     this.copy(zombies = newZombies)
   }
 
-  override def toString: String = {
-    var output = "";
-    output += terrain.value;
-    output += Console.GREEN + players.mkString(", ") + Console.RESET + "\n"
-    output += Console.RED + zombies.mkString(", ") + Console.RESET
-    output;
-  }
-
   def topRow(): String = "⌈          ⌉"
   def playerRow(): String = players.mkString(", ")
   def zombieRow(): String = zombies.mkString(", ")
   def bottomRow(): String = "⌊          ⌋"
+
+  override def toString: String = {
+    var output = "";
+    if (fog>1) {
+
+    }
+    output += terrain.value;
+    output += Console.GREEN + players.mkString(", ") + Console.RESET
+    output += Console.RED + zombies.mkString(", ") + Console.RESET
+    output;
+  }
 }
