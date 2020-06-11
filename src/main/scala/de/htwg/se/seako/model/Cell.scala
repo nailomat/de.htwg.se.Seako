@@ -15,18 +15,22 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
   }
 
   def topRow(): String = "⌈          ⌉"
+
   def playerRow(): String = players.mkString(", ")
+
   def zombieRow(): String = zombies.mkString(", ")
+
   def bottomRow(): String = "⌊          ⌋"
 
   override def toString: String = {
     var output = "";
-    if (fog>1) {
-
+    if (fog.value > 0) {
+      output = "■"
+    } else {
+      output += terrain.value;
+      output += Console.GREEN + players.mkString(", ") + Console.RESET
+      output += Console.RED + zombies.mkString(", ") + Console.RESET
     }
-    output += terrain.value;
-    output += Console.GREEN + players.mkString(", ") + Console.RESET
-    output += Console.RED + zombies.mkString(", ") + Console.RESET
     output;
   }
 }
