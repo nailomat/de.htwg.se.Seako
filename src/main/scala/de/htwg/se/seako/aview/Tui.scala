@@ -20,12 +20,11 @@ class Tui(controller: Controller) extends Observer{
             controller.addZombie(row.toInt, column.toInt)
           }
 
-        case command :: row :: column :: value ::Nil => {
-
-        }
+        case command :: row :: column :: value ::Nil =>
       }
 
       def validateLongString(input: String): Unit = {
+
       }
 //      case "n" => new Grid[Cell](10, Cell(List[Player](), List[Zombie](), Terrain(0), Fog(0)))
 //      case "small" => new Grid[Cell](5, Cell(List[Player](), List[Zombie](), Terrain(0), Fog(1)))

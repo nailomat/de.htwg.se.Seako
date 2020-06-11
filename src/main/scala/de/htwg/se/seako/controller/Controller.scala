@@ -17,6 +17,10 @@ class Controller(var grid: Grid[Cell]) extends Observable{
     grid = grid.replaceCell(row, col, grid.cell(row, col).addZombie(Zombie(1,0)))
   }
 
+  def removeZombie(row: Int, col: Int): Unit = {
+    grid = grid.replaceCell(row, col, grid.cell(row, col))
+  }
+
   def gridToString: String = grid.toString
 
 }

@@ -14,6 +14,19 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
     this.copy(zombies = newZombies)
   }
 
+  def removeZombie(zombie: Zombie): Cell = {
+    val newZombies = zombies
+    if (zombies.nonEmpty) {
+
+    }
+    this.copy(zombies = newZombies)
+  }
+
+  def removePlayer(player: Player): Cell = {
+    val newPlayers = players.filterNot(players => players == player)
+    this.copy(players = newPlayers)
+  }
+
   def topRow(): String = "⌈          ⌉"
 
   def playerRow(): String = players.mkString(", ")
@@ -23,14 +36,14 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
   def bottomRow(): String = "⌊          ⌋"
 
   override def toString: String = {
-    var output = "";
+    var output = ""
     if (fog.value > 0) {
       output = "■"
     } else {
-      output += terrain.value;
+      output += terrain.value
       output += Console.GREEN + players.mkString(", ") + Console.RESET
       output += Console.RED + zombies.mkString(", ") + Console.RESET
     }
-    output;
+    output
   }
 }
