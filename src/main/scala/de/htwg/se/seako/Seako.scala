@@ -6,16 +6,15 @@ import de.htwg.se.seako.model.{Cell, Fog, Grid, Player, Terrain, Zombie}
 
 object Seako {
   def main(args: Array[String]): Unit = {
-    val controller = new Controller(grid = Grid[Cell])
+    val cell = Cell(Nil, Nil,Terrain(0), Fog(1))
+    val controller = new Controller(new Grid[Cell](1, cell))
     val tui = new Tui(controller)
-//    val cell = new Cell(List[Player](), List[Zombie](Zombie(1,0)),Terrain(1), Fog(0))
-//    var grid = new Grid[Cell](1, cell)
-//    val tui = new Tui()
+    controller.notifyObservers()
     var input: String = ""
-    if (args.length > 0) input = args(0)
+
     do {
-      tui.processInputLine(input)
       input = readLine()
+      tui.processInputLine(input)
     } while (input != "q")
   }
 
