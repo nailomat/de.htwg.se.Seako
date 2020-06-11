@@ -1,3 +1,5 @@
+import scala.util.Random
+
 case class Cell(value: Int) {
   def isSet:Boolean = value != 0
 }
@@ -25,3 +27,23 @@ grid.size
 grid.cell(0,0)
 grid.cell(0,0)
 grid.rows(1)(0).isSet
+
+
+case class Dice(min: Integer = 1, max: Integer = 6) {
+  def rolldice: Integer = {
+    val value = min + Random.nextInt(max)
+    value
+  }
+}
+val dice = new Dice(1,6)
+dice.rolldice
+val dice2 = new Dice(1,6)
+dice2.rolldice
+val dice3 = new Dice(1,6)
+dice3.rolldice
+val dice4 = new Dice(1,6)
+dice4.rolldice
+val dice5 = new Dice(1,6)
+dice5.rolldice
+val dice6 = new Dice(1,6)
+dice6.rolldice
