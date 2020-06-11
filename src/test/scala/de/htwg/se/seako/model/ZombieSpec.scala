@@ -26,6 +26,9 @@ class ZombieSpec extends WordSpec with Matchers{
         "has attack value 1" in {
           aliveZombie.attack should be (1)
         }
+        "be visible on the Field" in {
+          aliveZombie.toString should be ("X")
+        }
       }
     }
   }
