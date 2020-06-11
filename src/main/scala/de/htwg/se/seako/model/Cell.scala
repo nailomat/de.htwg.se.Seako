@@ -15,11 +15,10 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain) 
   }
 
   override def toString: String = {
-
     var output = "";
+    output += terrain.value;
     output += Console.GREEN + players.mkString(", ") + Console.RESET + "\n"
     output += Console.RED + zombies.mkString(", ") + Console.RESET + "\n"
-
     output;
   }
 }

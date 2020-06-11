@@ -17,5 +17,4 @@ object Seako {
     } while (input != "q")
   }
 
-
 }
