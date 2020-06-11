@@ -13,7 +13,7 @@ case class Grid[T](rows:Vector[Vector[T]]) {
 
     for (row <- 0 until size) {
       for (col <- 0 until size) {
-        output = output + cell(row,col).toString + "\t"
+        output = output + cell(row,col) + "\t"
       }
       output = output + "\n"
     }
