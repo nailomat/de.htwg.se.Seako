@@ -3,16 +3,22 @@ package de.htwg.se.seako.model
 import org.scalatest.{Matchers, WordSpec}
 
 class DiceSpec extends WordSpec with Matchers{
-  val dice = Dice()
-
-
-  "A Dice" should{
-    "have a vlaue" in{
-      dice.min should be (1)
-      dice.max should be (6)
-      dice.rolldice shouldBe a [Integer]
-      dice.value should be <= 6
-      dice.value should be >= 1
+  "A dice" when{
+    "not set to any value" should{
+      val defaultDice = Dice()
+      "have value between" in {
+        defaultDice.min should be(1)
+        defaultDice.max should be(6)
+        1 to 6 contains defaultDice.rolldice
+      }
+    }
+    "if min or max is Set to differt value" should {
+      val diceSet = Dice(0,8)
+      "set the dice values" in {
+        diceSet.min should be(0)
+        diceSet.max should be(8)
+        0 to 8 contains diceSet.rolldice
+      }
     }
   }
 
