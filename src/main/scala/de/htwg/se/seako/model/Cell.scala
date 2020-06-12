@@ -27,12 +27,18 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
     this.copy(players = newPlayers)
   }
 
-  def topRow(): String =    "⌈          ⌉"
-  def fogTopRow(): String =    "⌈■■■■■■■■■■⌉"
+  def topRow(): String = "⌈          ⌉"
+
+  def fogTopRow(): String = "⌈■■■■■■■■■■⌉"
+
   def playerRow(): String = players.mkString(", ")
+
   def fogPlayerRow(): String = "|■■■■■■■■■■|"
+
   def zombieRow(): String = zombies.mkString(", ")
+
   def fogZombieRow(): String = "|■■■■■■■■■■|"
+
   def fogBottomRow(): String = "⌊■■■■■■■■■■⌋"
 
   def bottomRow(): String = "⌊          ⌋"
