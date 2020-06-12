@@ -1,7 +1,6 @@
 package de.htwg.se.seako.aview
 
 import de.htwg.se.seako.controller.Controller
-import de.htwg.se.seako.model.{Cell, Finish, Fog, Grid, Player, Start, Terrain, Zombie}
 import de.htwg.se.seako.util.Observer
 
 class Tui(controller: Controller) extends Observer{
@@ -21,6 +20,12 @@ class Tui(controller: Controller) extends Observer{
         if (input.nonEmpty) {
           val splitInput = input.split(" ")
           splitInput.length match {
+            case 2 =>
+              val command = splitInput(0)
+              val value = splitInput(1)
+              if (command.equals("getPlayerPos")) {
+                controller.getPlayerPos(value)
+              }
             case 3 =>
               val command = splitInput(0)
               val row = splitInput(1).toInt
@@ -39,6 +44,7 @@ class Tui(controller: Controller) extends Observer{
               if (command.equals("removePlayer")) {
                 controller.removePlayer(row, col, value)
               }
+
             case _ =>
           }
         }
