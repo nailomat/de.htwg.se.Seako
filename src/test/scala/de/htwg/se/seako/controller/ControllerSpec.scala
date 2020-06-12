@@ -26,6 +26,24 @@ class ControllerSpec extends WordSpec with Matchers{
         observer.updated should be (true)
         controller.grid.cell(0,0).zombies.length should be (1)
       }
+      "notify its Observer after adding a Player P1" in {
+        controller.createEmptyGrid(5)
+        controller.addPlayer(0,0, "P1")
+        observer.updated should be (true)
+        controller.grid.cell(0,0).players.length should be (1)
+      }
+      "notify its Observer after removing a Player P1" in {
+        controller.createEmptyGrid(5)
+        controller.addPlayer(0,0,"P1")
+        controller.addPlayer(0,0,"P2")
+        controller.removePlayer(0,0,"P2")
+        observer.updated should be (true)
+        controller.grid.cell(0,0).players.length should be (1)
+      }
+      "print out the empty grid with a size 0" in {
+        controller.createEmptyGrid(0)
+        controller.gridToString should be ("\n")
+      }
     }
   }
 
