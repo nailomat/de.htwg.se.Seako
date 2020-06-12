@@ -44,6 +44,10 @@ class ControllerSpec extends WordSpec with Matchers{
         controller.createEmptyGrid(0)
         controller.gridToString should be ("\n")
       }
+      "won't notify controller" in {
+        controller.remove(observer)
+        observer.updated should be (true)
+      }
     }
   }
 
