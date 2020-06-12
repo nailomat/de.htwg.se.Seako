@@ -29,21 +29,24 @@ class Controller(var grid: Grid[Cell]) extends Observable {
     notifyObservers()
   }
 
-  def getPlayerPos(name: String): Unit = {
+  def getPlayerPos(name: String): String = {
+    var output = ""
     for (row <- 0 until grid.size) {
       for (col <- 0 until grid.size) {
         if (grid.rows(row)(col).playerRow().contains(name)) {
-          println("SUCC")
-          println(row + " " + col)
+          output = row + " " + col
+
         }
       }
     }
+    output
   }
 
-  //
-  //  def movePlayer(row: Int, col: Int, name: String) : Unit = {
-  //    grid = grid.replaceCell(row, col, grid.cell(r))
-  //  }
+//
+//  def movePlayer(row: Int, col: Int, name: String) : Unit = {
+//     grid
+//     grid = grid.replaceCell(row, col, grid.cell())
+//  }
 
   def gridToString: String = grid.toString
 
