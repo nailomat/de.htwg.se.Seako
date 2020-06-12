@@ -22,6 +22,34 @@ class GridSpec extends WordSpec with Matchers {
           "■  ■ ■" +
           "■  ■ ■"
       }
+      "if firstGrid has fog on it" in{
+        val fogGrid = new Grid[Cell](2,Cell(Nil, Nil, Terrain(0),Fog(1)))
+        fogGrid.toString should be (
+          "\n" + fogGrid.cell(0,0).fogTopRow() + "\t" +
+          fogGrid.cell(0,1).fogTopRow() + "\t\n" +
+
+          fogGrid.cell(0,0).fogPlayerRow() + "\t" +
+          fogGrid.cell(0,1).fogPlayerRow() + "\t\n" +
+
+          fogGrid.cell(0,0).fogZombieRow() +"\t" +
+          fogGrid.cell(0,1).fogZombieRow() +"\t\n" +
+
+          fogGrid.cell(0,0).fogBottomRow() +"\t" +
+          fogGrid.cell(0,1).fogBottomRow() +"\t\n" +
+
+          fogGrid.cell(1,0).fogTopRow() + "\t" +
+          fogGrid.cell(1,1).fogTopRow() + "\t\n" +
+
+          fogGrid.cell(1,0).fogPlayerRow() + "\t" +
+          fogGrid.cell(1,1).fogPlayerRow() + "\t\n" +
+
+          fogGrid.cell(1,0).fogZombieRow() +"\t" +
+          fogGrid.cell(1,1).fogZombieRow() +"\t\n" +
+
+          fogGrid.cell(1,0).fogBottomRow() +"\t" +
+          fogGrid.cell(1,1).fogBottomRow() +"\t\n"
+        )
+      }
     }
   }
 }

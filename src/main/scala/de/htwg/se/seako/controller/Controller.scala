@@ -14,10 +14,10 @@ class Controller(var grid: Grid[Cell]) extends Observable{
     notifyObservers()
   }
 
-  def removeZombie(row: Int, col: Int): Unit = {
-    grid = grid.replaceCell(row, col, grid.cell(row, col))
-    notifyObservers()
-  }
+//  def removeZombie(row: Int, col: Int): Unit = {
+//    grid = grid.replaceCell(row, col, grid.cell(row, col))
+//    notifyObservers()
+//  }
 
   def addPlayer(row: Int, col: Int, name: String): Unit = {
     grid = grid.replaceCell(row, col, grid.cell(row, col).addPlayer(Player(name)))

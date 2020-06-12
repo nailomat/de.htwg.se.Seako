@@ -12,20 +12,29 @@ class CellSpec extends WordSpec with Matchers{
         emptyCell.terrain should be (Terrain(0))
         emptyCell.fog should be (Fog(0))
       }
-      "if added a Player" in {
+      "if added a Player and then removed again" in {
         val onePlayerCell = emptyCell.addPlayer(Player("TestPlayer"))
         onePlayerCell.players should be(List(Player("TestPlayer")))
+        val removePlayerCell = onePlayerCell.removePlayer(Player("TestPlayer"))
+        removePlayerCell.players should be (Nil)
       }
 
-      "if added a Zombie" in {
+      "if added a Zombie and then removed again" in {
         val oneZombieCell = emptyCell.addZombie(Zombie(1,1))
         oneZombieCell.zombies should be (List(Zombie(1,1)))
+//        val removeZombieCell = oneZombieCell.removeZombie(Zombie(1,1))
+//        removeZombieCell.zombies should be ()
       }
+
       "if printed out" in {
         emptyCell.topRow() should be ("⌈          ⌉")
+        emptyCell.fogTopRow() should be ("⌈■■■■■■■■■■⌉")
         emptyCell.playerRow() should be ("")
+        emptyCell.fogPlayerRow() should be ("|■■■■■■■■■■|")
         emptyCell.zombieRow() should be ("")
+        emptyCell.fogZombieRow() should be ("|■■■■■■■■■■|")
         emptyCell.bottomRow() should be ("⌊          ⌋")
+        emptyCell.fogBottomRow() should be ("⌊■■■■■■■■■■⌋")
         emptyCell.toString should be ("0\u001B[32m\u001B[0m\u001B[31m\u001B[0m")
       }
     }
