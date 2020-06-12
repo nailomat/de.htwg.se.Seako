@@ -14,13 +14,13 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
     this.copy(zombies = newZombies)
   }
 
-  def removeZombie(zombie: Zombie): Cell = {
-    val newZombies = zombies
-    if (zombies.nonEmpty) {
-
-    }
-    this.copy(zombies = newZombies)
-  }
+//  def removeZombie(zombie: Zombie): Cell = {
+//    val newZombies = zombies
+//    if (zombies.nonEmpty) {
+//
+//    }
+//    this.copy(zombies = newZombies)
+//  }
 
   def removePlayer(player: Player): Cell = {
     val newPlayers = players.filterNot(players => players == player)
