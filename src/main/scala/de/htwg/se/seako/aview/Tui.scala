@@ -1,7 +1,6 @@
 package de.htwg.se.seako.aview
 
 import de.htwg.se.seako.controller.Controller
-import de.htwg.se.seako.model.{Cell, Finish, Fog, Grid, Player, Start, Terrain, Zombie}
 import de.htwg.se.seako.util.Observer
 
 class Tui(controller: Controller) extends Observer{
@@ -10,7 +9,6 @@ class Tui(controller: Controller) extends Observer{
   def processInputLine(input: String): Unit= {
     input match {
       case "q" =>
-      case "t" => controller.createEmptyGrid(5)
       case "small" => controller.createEmptyGrid(5)
       case "medium" => controller.createEmptyGrid(10)
       case "big" => controller.createEmptyGrid(20)
