@@ -2,12 +2,12 @@ package de.htwg.se.seako
 
 import de.htwg.se.seako.aview.Tui
 import de.htwg.se.seako.controller.Controller
-import de.htwg.se.seako.model.{Cell, Fog, Grid, Player, Terrain, Zombie}
+import de.htwg.se.seako.model.{Cell, Fog, Grid, Terrain}
 
 object Seako {
   def main(args: Array[String]): Unit = {
     val cell = Cell(Nil, Nil,Terrain(0), Fog(1))
-    val controller = new Controller(new Grid[Cell](1, cell))
+    val controller = new Controller(new Grid[Cell](5, cell))
     val tui = new Tui(controller)
     controller.notifyObservers()
     var input: String = ""
