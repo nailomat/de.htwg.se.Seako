@@ -1,6 +1,6 @@
 package de.htwg.se.seako.model
 
-case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, fog: Fog) {
+case class Cell(players: List[Player], enemies: List[Enemies], terrain: Terrain, fog: Fog) {
 
   //  def isSet: Boolean = terrain.value != 0
 
@@ -28,7 +28,7 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
 
   def fogPlayerRow(): String = "|■■■■■■■■■■|"
 
-  def zombieRow(): String = zombies.mkString(", ")
+  def zombieRow(): String = enemies.mkString(", ")
 
   def fogZombieRow(): String = "|■■■■■■■■■■|"
 
@@ -43,7 +43,7 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
     } else {
       output += terrain.value
       output += Console.GREEN + players.mkString(", ") + Console.RESET
-      output += Console.RED + zombies.mkString(", ") + Console.RESET
+      output += Console.RED + enemies.mkString(", ") + Console.RESET
     }
     output
   }
