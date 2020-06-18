@@ -7,7 +7,7 @@ import org.scalatest.{Matchers, WordSpec}
 class TuiSpec extends WordSpec with Matchers{
 
   "A Seako Tui" should {
-    val controller = new Controller(new Grid[Cell](5,Cell(Nil, Nil,Terrain(0),Fog(1))))
+    val controller = new Controller(new Grid[Cell](5,Cell(Nil, Nil,Terrain(0),Fog(1))), PlayerList(Nil))
     val tui = new Tui(controller)
     "create and small empty Seako on input 'small'" in {
       tui.processInputLine("small")

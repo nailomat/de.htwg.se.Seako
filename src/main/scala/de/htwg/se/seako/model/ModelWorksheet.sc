@@ -1,26 +1,49 @@
-import de.htwg.se.seako.model.{Cell, Finish, Fog, Player, Start, Terrain, Zombie}
+import de.htwg.se.seako.model.Player
 
-case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, fog: Fog) {
+case class PlayerList(players: List[Player]) {
 
-  //  def isSet: Boolean = terrain.value != 0
-
-  def addPlayer(player: Player): Cell = {
-    val newPlayers = players :+ player
-    val cell = this.copy(players = newPlayers)
-    cell
+  def addPlayer(player: Player): PlayerList = {
+    if (!players.contains(player)) {
+      val newPlayers = players :+ player
+      this.copy(players = newPlayers)
+    } else {
+      println("Player already exists")
+      this
+    }
   }
 
-  override def toString: String = {
-    var output = ""
-    output += players.mkString(", ") + "\n"
-    output += "\n"
-    output += zombies.mkString(", ") + "\n"
-    output
+  def removePlayer(player: Player): PlayerList = {
+    val newPlayers = players.filterNot(players => players == player)
+    this.copy(players = newPlayers)
   }
+
+  def getCurrentPlayer: Player = {
+    players.head
+  }
+
+  def nextPlayer: PlayerList = {
+    val newPlayers = players.drop(1):+players.head
+    this.copy(players = newPlayers)
+  }
+
+
+
 }
 
-val cell1 = Cell(Nil, Nil, Terrain(1), Fog(1))
-cell1.addPlayer(Player("P1"))
-cell1.addPlayer(Player("P2"))
-cell1.copy(players = List(Player("P2")))
-cell1
+val playerList2 = PlayerList(List[Player](Player("P1"),Player("P2"),Player("P3")))
+playerList2.players
+playerList2.addPlayer(Player("P4"))
+playerList2.addPlayer(Player("P1"))
+playerList2.removePlayer(Player("P1"))
+playerList2.nextPlayer
+playerList2.getCurrentPlayer
+
+
+
+val playerList1 = PlayerList(List[Player](Player("P1"),Player("P2"),Player("P3")))
+playerList1.players
+playerList1.addPlayer(Player("P4"))
+playerList1.addPlayer(Player("P1"))
+playerList1.removePlayer(Player("P1"))
+playerList1.nextPlayer
+playerList1.getCurrentPlayer
