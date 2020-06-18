@@ -33,7 +33,7 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
 
   def fogPlayerRow(): String = "|■■■■■■■■■■|"
 
-  def zombieRow(): String = enemies.zombies.mkString(", ")
+  def zombieRow(): String = enemies.zombies.mkString(", ") + enemies.mutants.mkString(", ") + enemies.bosses.mkString(", ")
 
   def fogZombieRow(): String = "|■■■■■■■■■■|"
 
@@ -41,15 +41,4 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
 
   def bottomRow(): String = "⌊          ⌋"
 
-  override def toString: String = {
-    var output = ""
-    if (fog.value > 0 && players.isEmpty) {
-      output = "■"
-    } else {
-      output += terrain.value
-      output += Console.GREEN + players.mkString(", ") + Console.RESET
-      output += Console.RED + enemies.zombies.mkString(", ") + enemies.mutants.mkString(", ") + enemies.bosses.mkString(", ")+ Console.RESET
-    }
-    output
-  }
 }
