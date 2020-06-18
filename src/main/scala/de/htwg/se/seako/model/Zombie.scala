@@ -1,9 +1,12 @@
 package de.htwg.se.seako.model
 
-case class Zombie(health: Int = 1, attack: Int = 1) {
-  def isAlive: Boolean = health > 0
-  def hasAttack: Boolean = attack > 0
+case class Zombie(health: Int = 1, attack: Int = 1) extends Enemy {
 
   override def toString: String = "Z"
 
+  override def isAlive: Boolean = health > 0
+
+  override def getAttack: Integer = attack
+
+  override def getHealth: Integer = health
 }

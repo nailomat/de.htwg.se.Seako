@@ -1,6 +1,6 @@
 package de.htwg.se.seako.model
 
-case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, fog: Fog) {
+case class Cell(players: List[Player], enemies: List[Enemies], terrain: Terrain, fog: Fog) {
 
   //  def isSet: Boolean = terrain.value != 0
 
@@ -9,17 +9,10 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
     this.copy(players = newPlayers)
   }
 
-  def addZombie(zombie: Zombie): Cell = {
-    val newZombies = zombies :+ zombie
-    this.copy(zombies = newZombies)
-  }
 
-  def removeZombie(zombie: Zombie): Cell = {
-    val newZombies = zombies
-    if (zombies.nonEmpty) {
-
-    }
-    this.copy(zombies = newZombies)
+  def addEnemy(enemy: Enemies): Cell = {
+    val newEnemies = enemies :+ enemy
+    this.copy(enemies = newEnemies)
   }
 
   def removePlayer(player: Player): Cell = {
@@ -35,7 +28,7 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
 
   def fogPlayerRow(): String = "|■■■■■■■■■■|"
 
-  def zombieRow(): String = zombies.mkString(", ")
+  def enemyRow(): String = enemies.mkString(", ")
 
   def fogZombieRow(): String = "|■■■■■■■■■■|"
 
@@ -50,7 +43,7 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
     } else {
       output += terrain.value
       output += Console.GREEN + players.mkString(", ") + Console.RESET
-      output += Console.RED + zombies.mkString(", ") + Console.RESET
+      output += Console.RED + enemies.mkString(", ") + Console.RESET
     }
     output
   }
