@@ -48,7 +48,7 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
     } else {
       output += terrain.value
       output += Console.GREEN + players.mkString(", ") + Console.RESET
-      output += Console.RED + enemies.zombies.mkString(", ") + Console.RESET
+      output += Console.RED + enemies.zombies.mkString(", ") + enemies.mutants.mkString(", ") + enemies.bosses.mkString(", ")+ Console.RESET
     }
     output
   }

@@ -50,6 +50,10 @@ class Tui(controller: Controller) extends Observer{
               if (command.equals("addZombie")) {
                 controller.addZombie(row, col)
               }
+              if (command.equals("addBoss")) {
+                println("ADDED BOSS")
+                controller.addBoss(row, col)
+              }
             case 4 =>
               val command = splitInput(0)
               val row = splitInput(1).toInt

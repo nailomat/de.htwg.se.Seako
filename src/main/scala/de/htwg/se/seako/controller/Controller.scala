@@ -50,6 +50,11 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
     notifyObservers()
   }
 
+  def addBoss(row: Int, col: Int): Unit = {
+    grid = grid.replaceCell(row, col, grid.cell(row, col).addEnemy("boss"))
+    notifyObservers()
+  }
+
   //  def removeZombie(row: Int, col: Int): Unit = {
   //    grid = grid.replaceCell(row, col, grid.cell(row, col))
   //    notifyObservers()
