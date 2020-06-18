@@ -31,7 +31,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
   }
 
   def createEmptyGrid(size: Int): Unit = {
-    grid = new Grid[Cell](size, Cell(Nil, Nil, Terrain(0), Fog(1)))
+    grid = new Grid[Cell](size, Cell(Nil, Enemies(), Terrain(0), Fog(1)))
     notifyObservers()
   }
 
@@ -45,8 +45,8 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
     notifyObservers()
   }
 
-  def addZombie(row: Int, col: Int): Unit = {
-    grid = grid.replaceCell(row, col, grid.cell(row, col).addZombie(Zombie(1, 0)))
+  def addEnemy(row: Int, col: Int, enemy: String): Unit = {
+    grid = grid.replaceCell(row, col, grid.cell(row, col).addEnemy(enemy))
     notifyObservers()
   }
 

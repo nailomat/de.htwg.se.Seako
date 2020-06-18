@@ -1,6 +1,6 @@
 package de.htwg.se.seako.model
 
-case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, fog: Fog) {
+case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: Fog) {
 
   //  def isSet: Boolean = terrain.value != 0
 
@@ -9,18 +9,16 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
     this.copy(players = newPlayers)
   }
 
-  def addZombie(zombie: Zombie): Cell = {
-    val newZombies = zombies :+ zombie
-    this.copy(zombies = newZombies)
-  }
 
-//  def removeZombie(zombie: Zombie): Cell = {
-//    val newZombies = zombies
-//    if (zombies.nonEmpty) {
-//
-//    }
-//    this.copy(zombies = newZombies)
-//  }
+  def addEnemy(enemy: String): Cell = {
+    var tempEnemy = enemies
+    enemy match {
+      case "zombie" =>  tempEnemy = enemies.addZombie(Zombie())
+      case "mutant" => tempEnemy = enemies.addMutant(Mutant())
+      case "boss" => tempEnemy= enemies.addBoss(Boss())
+    }
+    this.copy(enemies = tempEnemy)
+  }
 
   def removePlayer(player: Player): Cell = {
     val newPlayers = players.filterNot(players => players == player)
@@ -35,7 +33,7 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
 
   def fogPlayerRow(): String = "|■■■■■■■■■■|"
 
-  def zombieRow(): String = zombies.mkString(", ")
+  def enemyRow(): String = enemies.zombies.mkString(", ") + enemies.mutants.mkString(", ") + enemies.bosses.mkString(", ")
 
   def fogZombieRow(): String = "|■■■■■■■■■■|"
 
@@ -43,15 +41,4 @@ case class Cell(players: List[Player], zombies: List[Zombie], terrain: Terrain, 
 
   def bottomRow(): String = "⌊          ⌋"
 
-  override def toString: String = {
-    var output = ""
-    if (fog.value > 0 && players.isEmpty) {
-      output = "■"
-    } else {
-      output += terrain.value
-      output += Console.GREEN + players.mkString(", ") + Console.RESET
-      output += Console.RED + zombies.mkString(", ") + Console.RESET
-    }
-    output
-  }
 }
