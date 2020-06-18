@@ -36,7 +36,7 @@ case class Grid[T](rows: Vector[Vector[T]]) {
         if (cell(row, col).fog.value > 0 && cell(row, col).players.isEmpty) {
           output += cell(row, col).fogZombieRow() + "\t"
         } else {
-          output += Console.RED + cell(row, col).zombieRow() + Console.RESET + "\t            "
+          output += Console.RED + cell(row, col).enemyRow() + Console.RESET + "\t            "
         }
       }
       output += "\n"

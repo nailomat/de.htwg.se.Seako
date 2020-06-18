@@ -33,7 +33,7 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
 
   def fogPlayerRow(): String = "|■■■■■■■■■■|"
 
-  def zombieRow(): String = enemies.zombies.mkString(", ") + enemies.mutants.mkString(", ") + enemies.bosses.mkString(", ")
+  def enemyRow(): String = enemies.zombies.mkString(", ") + enemies.mutants.mkString(", ") + enemies.bosses.mkString(", ")
 
   def fogZombieRow(): String = "|■■■■■■■■■■|"
 
