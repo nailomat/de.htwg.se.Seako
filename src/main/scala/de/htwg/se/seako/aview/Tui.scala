@@ -1,17 +1,17 @@
 package de.htwg.se.seako.aview
 
 import de.htwg.se.seako.controller.{Controller, GameStatus}
+import de.htwg.se.seako.model.Player
 import de.htwg.se.seako.util.Observer
 
-class Tui(controller: Controller) extends Observer{
+class Tui(controller: Controller) extends Observer {
   controller.add(this)
   println("Type \"start\" to start the game")
 
-  def processInputLine(input: String): Unit= {
+  def processInputLine(input: String): Unit = {
     input match {
       case "undo" => controller.undo()
       case "redo" => controller.redo()
-      case "asdf" => println(controller.gameStatus)
       case "start" =>
         controller.startGame()
         println(controller.gameStatus)
@@ -34,44 +34,53 @@ class Tui(controller: Controller) extends Observer{
       case _ => validateLongString(input)
     }
 
-      def validateLongString(input: String): Unit = {
-        if (input.nonEmpty) {
-          val splitInput = input.split(" ")
-          splitInput.length match {
-            case 1 =>
-              if (controller.gameStatus.equals(GameStatus.INSERTPLAYER)) {
-                controller.addPlayerList(splitInput(0))
-                println(controller.playerList)
-              } else {
-                println("Command unknown")
-              }
-            case 3 =>
-              val command = splitInput(0)
-              val row = splitInput(1).toInt
-              val col = splitInput(2).toInt
-              command match {
-                case "addZombie" => controller.addEnemy(row, col,"zombie")
-                case "addBoss" => controller.addEnemy(row, col, "boss")
-                case "addMutant" => controller.addEnemy(row, col, "mutant")
-              }
-            case 4 =>
-              val command = splitInput(0)
-              val row = splitInput(1).toInt
-              val col = splitInput(2).toInt
-              val value = splitInput(3)
-              if (command.equals("addPlayer")) {
-                controller.addPlayer(row, col, value)
-              }
-              if (command.equals("removePlayer")) {
-                controller.removePlayer(row, col, value)
-              }
-            case _ =>
-          }
+    def validateLongString(input: String): Unit = {
+      if (input.nonEmpty) {
+        val splitInput = input.split(" ")
+        splitInput.length match {
+          case 1 =>
+            if (controller.gameStatus.equals(GameStatus.INSERTPLAYER)) {
+              controller.addPlayerList(splitInput(0))
+              println(controller.playerList)
+            } else {
+              println("Command unknown")
+            }
+          case 3 =>
+            val command = splitInput(0)
+            val row = splitInput(1).toInt
+            val col = splitInput(2).toInt
+            command match {
+              case "addCurrentPlayer" =>
+                controller.setCell(row, col, controller.grid.cell(row, col)
+                  .addPlayer(controller.playerList.getCurrentPlayer))
+              case "addZombie" =>
+                controller.setCell(row, col, controller.grid.cell(row, col)
+                  .addEnemy("zombie"))
+              case "addMutant" =>
+                controller.setCell(row, col, controller.grid.cell(row, col)
+                  .addEnemy("mutant"))
+              case "addBoss" =>
+                controller.setCell(row, col, controller.grid.cell(row, col)
+                  .addEnemy("boss"))
+            }
+          case 4 =>
+            val command = splitInput(0)
+            val row = splitInput(1).toInt
+            val col = splitInput(2).toInt
+            val value = splitInput(3)
+            if (command.equals("addPlayer")) {
+              controller.addPlayer(row, col, value)
+            }
+            if (command.equals("removePlayer")) {
+              //controller.removePlayer(row, col, value)
+              controller.setCell(row, col, controller.grid.cell(row, col).removePlayer(Player(value)))
+            }
+          case _ =>
         }
       }
+    }
 
   }
-
 
 
   override def update(): Unit = {
