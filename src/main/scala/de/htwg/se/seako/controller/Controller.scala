@@ -67,6 +67,10 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
 
   def gridToString: String = grid.toString
 
+  def doStep(row: Int, col: Int, cell: Cell): Unit = {
+    undoManager.doStep(new SetCommand(row, col, cell, this))
+  }
+
   def undo(): Unit = {
     undoManager.undoStep()
     notifyObservers()
