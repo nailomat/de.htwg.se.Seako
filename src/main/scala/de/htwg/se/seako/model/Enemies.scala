@@ -8,16 +8,14 @@ trait Enemy{
 
 case class Enemies(zombies: List[Zombie] = Nil,mutants: List[Mutant]= Nil,bosses: List[Boss]= Nil) {
 
-//
-//  def getValue: Integer = {
-//    var value : Integer = 0
-//    Enemies match {
-//      case zombies.length > 0 => zombies.foreach(Zombie => value = value + Zombie.getAttack)
-//      case mutants.length > 0 => mutants.foreach(Mutant => value = value + Mutant.getAttack)
-//      case bosses.length > 0 => bosses.foreach(Boss => value = value + Boss.getAttack)
-//    }
-//    value
-//  }
+
+  def getValue: Integer = {
+    var value = getValue
+    zombies.foreach(Zombie => value = value + Zombie.getAttack)
+    mutants.foreach(Mutant => value = value + Mutant.getAttack)
+    bosses.foreach(Boss => value = value + Boss.getAttack)
+    value
+  }
 
   def addZombie(zombie: Zombie): Enemies = {
     val newZombies = zombies :+ zombie
