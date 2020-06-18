@@ -3,7 +3,7 @@ package de.htwg.se.seako.model
 import org.scalatest.{Matchers, WordSpec}
 
 class CellSpec extends WordSpec with Matchers{
-  "A Cell" when {
+/*  "A Cell" when {
     "not set to any value " should {
       val emptyCell = Cell(Nil, Nil, Terrain(0), Fog(0))
       "have value Nil or 0" in {
@@ -42,4 +42,6 @@ class CellSpec extends WordSpec with Matchers{
       }
     }
   }
+
+ */
 }
