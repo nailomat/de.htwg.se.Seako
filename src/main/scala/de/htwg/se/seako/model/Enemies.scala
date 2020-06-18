@@ -10,10 +10,10 @@ case class Enemies(zombies: List[Zombie] = Nil,mutants: List[Mutant]= Nil,bosses
 
 
   def getValue: Integer = {
-    var value = getValue
-    zombies.foreach(Zombie => value = value + Zombie.getAttack)
-    mutants.foreach(Mutant => value = value + Mutant.getAttack)
-    bosses.foreach(Boss => value = value + Boss.getAttack)
+    var value = 0
+    value = value + (zombies.length * 1)
+    value = value + (mutants.length * 2)
+    value = value + (bosses.length * 5)
     value
   }
 
