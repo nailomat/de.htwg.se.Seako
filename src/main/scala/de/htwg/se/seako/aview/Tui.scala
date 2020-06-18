@@ -9,6 +9,8 @@ class Tui(controller: Controller) extends Observer{
 
   def processInputLine(input: String): Unit= {
     input match {
+      case "undo" => controller.undo()
+      case "redo" => controller.redo()
       case "asdf" => println(controller.gameStatus)
       case "start" =>
         controller.startGame()

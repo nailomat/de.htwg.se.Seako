@@ -2,10 +2,11 @@ package de.htwg.se.seako.controller
 
 import de.htwg.se.seako.controller.GameStatus._
 import de.htwg.se.seako.model._
-import de.htwg.se.seako.util.Observable
+import de.htwg.se.seako.util.{Observable,UndoManager}
 
 class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Observable {
 
+  val undoManager = new UndoManager
   var gameStatus: GameStatus = START
 
   def setGameStatus(status: GameStatus): Unit = {
@@ -65,5 +66,15 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
   //  }
 
   def gridToString: String = grid.toString
+
+  def undo(): Unit = {
+    undoManager.undoStep()
+    notifyObservers()
+  }
+
+  def redo(): Unit = {
+    undoManager.redoStep()
+    notifyObservers()
+  }
 
 }
