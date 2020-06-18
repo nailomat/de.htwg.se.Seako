@@ -3,8 +3,13 @@ package de.htwg.se.seako.model
 case class PlayerList(players: List[Player]) {
 
   def addPlayer(player: Player): PlayerList = {
-    val newPlayers = players :+ player
-    this.copy(players = newPlayers)
+    if (!players.contains(player)) {
+      val newPlayers = players:+player
+      this.copy(players = newPlayers)
+    } else {
+      println("Player already exists")
+      this
+    }
   }
 
   def removePlayer(player: Player): PlayerList = {

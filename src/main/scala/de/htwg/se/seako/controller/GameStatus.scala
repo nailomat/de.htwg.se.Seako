@@ -2,9 +2,10 @@ package de.htwg.se.seako.controller
 
 object GameStatus extends Enumeration {
   type GameStatus = Value
-  val INSERTPLAYER, CREATEGAME, NEWROUND, PLAYERTURN, MOVE, FIGHT, ZOMBIETURN, ENDGAME = Value
+  val START, INSERTPLAYER, CREATEGAME, NEWROUND, PLAYERTURN, MOVE, FIGHT, ZOMBIETURN, ENDGAME = Value
 
   val map = Map[GameStatus, String](
+    START -> "TYPE \"start\" TO START THE GAME",
     INSERTPLAYER -> "Insert Players",
     CREATEGAME -> "Creating Game",
     NEWROUND -> "Next Round - Spawning Zombies",
