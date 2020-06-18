@@ -31,8 +31,14 @@ class TuiSpec extends WordSpec with Matchers{
       tui.processInputLine("removePlayer 0 0 P1")
       controller.grid.cell(0,0) should be (Cell(Nil, Nil, Terrain(0), Fog(1)))
     }
-    "an not accepted input would be everythin else" in {
+    "an not accepted input would be everything else" in {
       tui.processInputLine("_") should be ()
+    }
+    "an empty input would be everything else" in {
+      tui.processInputLine("") should be ()
+    }
+    "exit on input 'q'" in {
+      tui.processInputLine("q") should be ()
     }
   }
 
