@@ -16,4 +16,11 @@ case class PlayerList(players: List[Player]) {
     players.head
   }
 
+  def nextPlayer: PlayerList = {
+    val newPlayers = players.drop(1):+players.head
+    this.copy(players = newPlayers)
+  }
+
+
+
 }
