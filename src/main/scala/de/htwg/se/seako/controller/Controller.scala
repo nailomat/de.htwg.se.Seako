@@ -15,7 +15,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
 
   def startGame(): Unit = {
     println("GAME HAS STARTED")
-    println("PLAYER ONE INSERT NAME:")
+    println("INSERT PLAYER  NAME:")
     gameStatus = INSERTPLAYER
   }
 

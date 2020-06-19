@@ -12,10 +12,7 @@ class Tui(controller: Controller) extends Observer {
     input match {
       case "undo" => controller.undo()
       case "redo" => controller.redo()
-      case "start" =>
-        controller.startGame()
-        println(controller.gameStatus)
-
+      case "start" => controller.startGame()
       case "small" => controller.createEmptyGrid(5)
       case "medium" => controller.createEmptyGrid(10)
       case "big" => controller.createEmptyGrid(20)
@@ -23,10 +20,11 @@ class Tui(controller: Controller) extends Observer {
         if (controller.gameStatus.equals(GameStatus.INSERTPLAYER)) {
           println("INSERT NAME:")
         }
-
+      case "status" => println(controller.gameStatus)
       case "n" =>
         if (controller.gameStatus.equals(GameStatus.INSERTPLAYER)) {
-          println("")
+          println("Select the field size:")
+          println("small | medium | big")
           controller.setGameStatus(GameStatus.CREATEGAME)
         }
 
