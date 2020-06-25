@@ -9,4 +9,6 @@ case class Zombie(health: Int = 1, attack: Int = 1) extends Enemy {
   override def getAttack: Integer = attack
 
   override def getHealth: Integer = health
+
+  override def addEnemy: Unit = Zombie
 }

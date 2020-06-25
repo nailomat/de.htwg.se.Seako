@@ -1,6 +1,6 @@
 package de.htwg.se.seako.model
 
-case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: Fog) {
+case class Cell(players: List[Player], zombies: List[Zombie] = Nil,mutants: List[Mutant]= Nil,bosses: List[Boss]= Nil, terrain: Terrain, fog: Fog) {
 
   //  def isSet: Boolean = terrain.value != 0
 
@@ -10,15 +10,30 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
   }
 
 
-  def addEnemy(enemy: String): Cell = {
-    var tempEnemy = enemies
-    enemy match {
-      case "zombie" =>  tempEnemy = enemies.addZombie(Zombie())
-      case "mutant" => tempEnemy = enemies.addMutant(Mutant())
-      case "boss" => tempEnemy= enemies.addBoss(Boss())
-    }
-    this.copy(enemies = tempEnemy)
+  def getValue: Integer = {
+    var value = 0
+    value = value + (zombies.length * 1)
+    value = value + (mutants.length * 2)
+    value = value + (bosses.length * 5)
+    value
   }
+
+  def addZombie(zombie: Zombie): Cell = {
+    val newZombies = zombies :+ zombie
+    this.copy(zombies = newZombies)
+  }
+
+  def addMutant(mutant: Mutant): Cell = {
+    val newMutants = mutants :+ mutant
+    this.copy(mutants = newMutants)
+  }
+
+  def addBoss(boss: Boss): Cell = {
+    val newBoss = bosses :+ boss
+    this.copy(bosses = newBoss)
+  }
+
+
 
   def removePlayer(player: Player): Cell = {
     val newPlayers = players.filterNot(players => players == player)
