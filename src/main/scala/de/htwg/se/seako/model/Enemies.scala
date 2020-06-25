@@ -6,30 +6,35 @@ trait Enemy{
   def getAttack: Integer
 }
 
-case class Enemies(zombies: List[Zombie] = Nil,mutants: List[Mutant]= Nil,bosses: List[Boss]= Nil) {
+object Enemy {
 
-
-  def getValue: Integer = {
-    var value = 0
-    value = value + (zombies.length * 1)
-    value = value + (mutants.length * 2)
-    value = value + (bosses.length * 5)
-    value
+  def apply(kind: String) = kind match {
+      case "zombie" => new Zombie()
+      case "mutant" => new  Mutant()
+      case "boss" => new Boss()
   }
+}
 
-  def addZombie(zombie: Zombie): Enemies = {
-    val newZombies = zombies :+ zombie
-    this.copy(zombies = newZombies)
-  }
+case class Enemies(enemies: List[Enemy]) {
 
-  def addMutant(mutant: Mutant): Enemies = {
-    val newMutants = mutants :+ mutant
-    this.copy(mutants = newMutants)
-  }
 
-  def addBoss(boss: Boss): Enemies = {
-    val newBoss = bosses :+ boss
-    this.copy(bosses = newBoss)
+//  def getValue: Integer = {
+//    var value = 0
+//    value = value + (zombies.length * 1)
+//    value = value + (mutants.length * 2)
+//    value = value + (bosses.length * 5)
+//    value
+//  }
+
+  def addEnemy (enemy : String): Enemies = {
+    var tmpEnemy = enemies
+    val newEnemy = Enemy(enemy)
+    enemy match {
+      case "zombie" => tmpEnemy = enemies :+ newEnemy.asInstanceOf[Zombie]
+      case "mutant" => tmpEnemy = enemies :+ newEnemy.asInstanceOf[Mutant]
+      case "boss" => tmpEnemy = enemies :+ newEnemy.asInstanceOf[Boss]
+    }
+    this.copy(enemies = tmpEnemy)
   }
 
 }

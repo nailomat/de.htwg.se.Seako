@@ -32,7 +32,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
   }
 
   def createEmptyGrid(size: Int): Unit = {
-    grid = new Grid[Cell](size, Cell(Nil, Enemies(), Terrain(0), Fog(1)))
+    grid = new Grid[Cell](size, Cell(Nil, Enemies(Nil), Terrain(0), Fog(1)))
     notifyObservers()
   }
 

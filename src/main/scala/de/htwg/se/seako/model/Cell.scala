@@ -4,21 +4,22 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
 
   //  def isSet: Boolean = terrain.value != 0
 
+  def addEnemy(enemy: String): Cell = {
+    var tempEnemy = enemies
+    enemy match {
+      case "zombie" =>  tempEnemy = enemies.addEnemy(enemy)
+      case "mutant" => tempEnemy = enemies.addEnemy(enemy)
+      case "boss" => tempEnemy= enemies.addEnemy(enemy)
+    }
+    this.copy(enemies = tempEnemy)
+  }
+
   def addPlayer(player: Player): Cell = {
     val newPlayers = players :+ player
     this.copy(players = newPlayers)
   }
 
 
-  def addEnemy(enemy: String): Cell = {
-    var tempEnemy = enemies
-    enemy match {
-      case "zombie" =>  tempEnemy = enemies.addZombie(Zombie())
-      case "mutant" => tempEnemy = enemies.addMutant(Mutant())
-      case "boss" => tempEnemy= enemies.addBoss(Boss())
-    }
-    this.copy(enemies = tempEnemy)
-  }
 
   def removePlayer(player: Player): Cell = {
     val newPlayers = players.filterNot(players => players == player)
@@ -33,7 +34,7 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
 
   def fogPlayerRow(): String = "|■■■■■■■■■■|"
 
-  def enemyRow(): String = enemies.zombies.mkString(", ") + enemies.mutants.mkString(", ") + enemies.bosses.mkString(", ")
+  def enemyRow(): String = enemies.enemies.mkString(", ")
 
   def fogZombieRow(): String = "|■■■■■■■■■■|"
 

@@ -1,6 +1,6 @@
 package de.htwg.se.seako.model
 
-case class Zombie(health: Int = 1, attack: Int = 1) extends Enemy {
+private class Zombie(health: Int = 1, attack: Int = 1) extends Enemy {
 
   override def toString: String = "Z"
 
@@ -9,4 +9,5 @@ case class Zombie(health: Int = 1, attack: Int = 1) extends Enemy {
   override def getAttack: Integer = attack
 
   override def getHealth: Integer = health
+
 }
