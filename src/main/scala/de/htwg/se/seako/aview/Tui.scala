@@ -43,6 +43,12 @@ class Tui(controller: Controller) extends Observer {
             } else {
               println("Command unknown")
             }
+          case 2 =>
+            val commad = splitInput(0)
+            val name = splitInput(1)
+            commad match {
+              case "playerPos" => controller.getPlayerPos(name)
+            }
           case 3 =>
             val command = splitInput(0)
             val row = splitInput(1).toInt

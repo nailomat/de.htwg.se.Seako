@@ -56,6 +56,10 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
     notifyObservers()
   }
 
+  def getPlayerPos(name: String): Unit = {
+    val currentcell = grid.playerPos(Player(name))
+    println("Player " + name + " is Currently on " + currentcell)
+  }
   //  def removeZombie(row: Int, col: Int): Unit = {
   //    grid = grid.replaceCell(row, col, grid.cell(row, col))
   //    notifyObservers()

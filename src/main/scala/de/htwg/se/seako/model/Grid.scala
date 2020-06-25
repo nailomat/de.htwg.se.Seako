@@ -11,6 +11,25 @@ case class Grid[T](rows: Vector[Vector[T]]) {
 
   def replaceCell(row: Int, col: Int, cell: T): Grid[T] = copy(rows.updated(row, rows(row).updated(col, cell)))
 
+  def playerPos(player: Player): (Int,Int,Cell) = {
+    var currentRow = 0
+    var currentCol = 0
+    for (row <- 0 until size) {
+      for (col <- 0 until size) {
+        if (cell(row, col).players.contains(player)) {
+          currentCol = col
+          currentRow = row
+        }
+      }
+    }
+
+    (currentRow,currentCol,cell(currentRow, currentCol))
+  }
+
+//  def movePlayer(player: Player) : Cell ={
+//    val
+//  }
+
   override def toString: String = {
 
     var output = "\n"
