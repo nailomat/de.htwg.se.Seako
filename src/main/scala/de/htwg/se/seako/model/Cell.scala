@@ -14,6 +14,17 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
     this.copy(enemies = tempEnemy)
   }
 
+  def removeEnemy(enemy: String): Cell = {
+    var tempEnemy = enemies
+    enemy match {
+      case "zombie" =>  tempEnemy = enemies.removeEnemy(enemy)
+      case "mutant" => tempEnemy = enemies.removeEnemy(enemy)
+      case "boss" => tempEnemy= enemies.removeEnemy(enemy)
+    }
+    this.copy(enemies = tempEnemy)
+  }
+
+
   def addPlayer(player: Player): Cell = {
     val newPlayers = players :+ player
     this.copy(players = newPlayers)

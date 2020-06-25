@@ -1,5 +1,7 @@
 package de.htwg.se.seako.model
 
+import scala.collection.mutable.ListBuffer
+
 trait Enemy{
   def isAlive: Boolean
   def getHealth: Integer
@@ -25,6 +27,23 @@ case class Enemies(enemies: List[Enemy]) {
 //    value = value + (bosses.length * 5)
 //    value
 //  }
+
+  def removeEnemy (enemy: String): Enemies = {
+    var tmpEnemy = enemies
+    var x = -1
+      enemy match {
+        case "zombie"=> x = tmpEnemy.indexWhere(p => p.isInstanceOf[Zombie])
+        case "mutant"=> x = tmpEnemy.indexWhere(p => p.isInstanceOf[Mutant])
+        case "boss"=> x = tmpEnemy.indexWhere(p => p.isInstanceOf[Boss])
+      }
+
+    if(x >= 0) {
+     tmpEnemy = tmpEnemy.patch(x,Nil,1)
+    }
+
+    this.copy(enemies = tmpEnemy)
+  }
+
 
   def addEnemy (enemy : String): Enemies = {
     var tmpEnemy = enemies
