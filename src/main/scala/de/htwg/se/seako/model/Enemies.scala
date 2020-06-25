@@ -30,15 +30,17 @@ case class Enemies(enemies: List[Enemy]) {
 
   def removeEnemy (enemy: String): Enemies = {
     var tmpEnemy = enemies
-    var x = 0
+    var x = -1
       enemy match {
         case "zombie"=> x = tmpEnemy.indexWhere(p => p.isInstanceOf[Zombie])
         case "mutant"=> x = tmpEnemy.indexWhere(p => p.isInstanceOf[Mutant])
         case "boss"=> x = tmpEnemy.indexWhere(p => p.isInstanceOf[Boss])
       }
-    if(x > 0) {
-     tmpEnemy = tmpEnemy.drop(x)
+
+    if(x >= 0) {
+     tmpEnemy = tmpEnemy.patch(x,Nil,1)
     }
+
     this.copy(enemies = tmpEnemy)
   }
 
