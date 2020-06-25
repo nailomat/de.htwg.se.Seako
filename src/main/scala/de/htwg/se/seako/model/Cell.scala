@@ -1,36 +1,22 @@
 package de.htwg.se.seako.model
 
-case class Cell(players: List[Player], zombies: List[Zombie] = Nil,mutants: List[Mutant]= Nil,bosses: List[Boss]= Nil, terrain: Terrain, fog: Fog) {
+case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: Fog) {
 
   //  def isSet: Boolean = terrain.value != 0
+
+  def addEnemy(enemy: String): Cell = {
+    var tempEnemy = enemies
+    enemy match {
+      case "zombie" =>  tempEnemy = enemies.addEnemy(enemy)
+      case "mutant" => tempEnemy = enemies.addEnemy(enemy)
+      case "boss" => tempEnemy= enemies.addEnemy(enemy)
+    }
+    this.copy(enemies = tempEnemy)
+  }
 
   def addPlayer(player: Player): Cell = {
     val newPlayers = players :+ player
     this.copy(players = newPlayers)
-  }
-
-
-  def getValue: Integer = {
-    var value = 0
-    value = value + (zombies.length * 1)
-    value = value + (mutants.length * 2)
-    value = value + (bosses.length * 5)
-    value
-  }
-
-  def addZombie(zombie: Zombie): Cell = {
-    val newZombies = zombies :+ zombie
-    this.copy(zombies = newZombies)
-  }
-
-  def addMutant(mutant: Mutant): Cell = {
-    val newMutants = mutants :+ mutant
-    this.copy(mutants = newMutants)
-  }
-
-  def addBoss(boss: Boss): Cell = {
-    val newBoss = bosses :+ boss
-    this.copy(bosses = newBoss)
   }
 
 
@@ -48,7 +34,7 @@ case class Cell(players: List[Player], zombies: List[Zombie] = Nil,mutants: List
 
   def fogPlayerRow(): String = "|■■■■■■■■■■|"
 
-  def enemyRow(): String = enemies.zombies.mkString(", ") + enemies.mutants.mkString(", ") + enemies.bosses.mkString(", ")
+  def enemyRow(): String = enemies.enemies.mkString(", ")
 
   def fogZombieRow(): String = "|■■■■■■■■■■|"
 

@@ -1,6 +1,6 @@
 package de.htwg.se.seako.model
 
-case class Boss(health: Int = 5, attack: Int = 5) extends Enemy {
+private class Boss(health: Int = 5, attack: Int = 5) extends Enemy {
 
   override def isAlive: Boolean = health > 0
 
