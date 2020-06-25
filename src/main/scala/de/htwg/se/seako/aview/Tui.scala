@@ -60,6 +60,15 @@ class Tui(controller: Controller) extends Observer {
               case "addBoss" =>
                 controller.setCell(row, col, controller.grid.cell(row, col)
                   .addEnemy("boss"))
+              case "removeZombie" =>
+                controller.setCell(row, col, controller.grid.cell(row, col)
+                  .removeEnemy("zombie"))
+              case "removeMutant" =>
+                controller.setCell(row, col, controller.grid.cell(row, col)
+                  .removeEnemy("mutant"))
+              case "removeBoss" =>
+                controller.setCell(row, col, controller.grid.cell(row, col)
+                  .removeEnemy("boss"))
             }
           case 4 =>
             val command = splitInput(0)
@@ -73,6 +82,7 @@ class Tui(controller: Controller) extends Observer {
               //controller.removePlayer(row, col, value)
               controller.setCell(row, col, controller.grid.cell(row, col).removePlayer(Player(value)))
             }
+
           case _ =>
         }
       }
