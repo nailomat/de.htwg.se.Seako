@@ -11,6 +11,16 @@ case class Grid[T](rows: Vector[Vector[T]]) {
 
   def replaceCell(row: Int, col: Int, cell: T): Grid[T] = copy(rows.updated(row, rows(row).updated(col, cell)))
 
+  def defog(): Grid[T] = {
+    var grid = this
+    for (row <- 0 until size) {
+      for (col <- 0 until size) {
+        grid = replaceCell(row, col, cell(row, col).defog())
+      }
+    }
+    grid
+  }
+
   override def toString: String = {
 
     var output = "\n"

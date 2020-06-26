@@ -27,7 +27,7 @@ class Tui(controller: Controller) extends Observer {
           println("small | medium | big")
           controller.setGameStatus(GameStatus.CREATEGAME)
         }
-
+      case "defog" => controller.defog()
       case "np" => controller.nextPlayer()
       case _ => validateLongString(input)
     }
@@ -79,7 +79,6 @@ class Tui(controller: Controller) extends Observer {
               controller.addPlayer(row, col, value)
             }
             if (command.equals("removePlayer")) {
-              //controller.removePlayer(row, col, value)
               controller.setCell(row, col, controller.grid.cell(row, col).removePlayer(Player(value)))
             }
 

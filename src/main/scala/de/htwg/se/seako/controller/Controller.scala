@@ -56,10 +56,10 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
     notifyObservers()
   }
 
-  //  def removeZombie(row: Int, col: Int): Unit = {
-  //    grid = grid.replaceCell(row, col, grid.cell(row, col))
-  //    notifyObservers()
-  //  }
+  def defog(): Unit = {
+    grid = grid.defog()
+    notifyObservers()
+  }
 
   //
   //  def getPlayerPos(name: String): Unit = {
