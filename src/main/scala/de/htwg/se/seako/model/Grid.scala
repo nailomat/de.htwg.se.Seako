@@ -22,13 +22,44 @@ case class Grid[T](rows: Vector[Vector[T]]) {
         }
       }
     }
-
     (currentRow,currentCol,cell(currentRow, currentCol))
   }
 
-//  def movePlayer(player: Player) : Cell ={
-//    val
-//  }
+  def playerPosRow(player: Player): Int = {
+    var currentRow = 0
+    var currentCol = 0
+    for (row <- 0 until size) {
+      for (col <- 0 until size) {
+        if (cell(row, col).players.contains(player)) {
+          currentCol = col
+          currentRow = row
+        }
+      }
+    }
+    currentRow
+  }
+  def playerPosCol(player: Player): Int = {
+    var currentRow = 0
+    var currentCol = 0
+    for (row <- 0 until size) {
+      for (col <- 0 until size) {
+        if (cell(row, col).players.contains(player)) {
+          currentCol = col
+          currentRow = row
+        }
+      }
+    }
+    currentCol
+  }
+
+  def movePlayer(move: String, playerMove: PlayerMove) : Grid[Cell] ={
+    var tmp = rows
+    var posCol = playerMove.moveUpCol
+    var posRow = playerMove.moveUpRow
+    move match {
+      case "up" => tmp = tmp(posRow)(posCol)
+    }
+  }
 
   override def toString: String = {
 
