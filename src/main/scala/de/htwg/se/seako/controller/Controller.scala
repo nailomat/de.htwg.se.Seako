@@ -109,4 +109,69 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
     notifyObservers()
   }
 
+  def validateLongString(input: String): Unit = {
+    if (input.nonEmpty) {
+      val splitInput = input.split(" ")
+      splitInput.length match {
+        case 1 =>
+          if (gameStatus.equals(GameStatus.INSERTPLAYER)) {
+            splitInput(0) match {
+            case "y" =>
+                println("INSERT NAME:")
+            case "n" =>
+              println("SELECT FIELD SIZE:")
+              println("small | medium | big")
+              setGameStatus(GameStatus.CREATEGAME);
+            case _ =>
+              addPlayerList(splitInput(0))
+              println(playerList)
+            }
+          }
+          if (splitInput(0).equals("np")) {
+            nextPlayer()
+          }
+        case 3 =>
+          val command = splitInput(0)
+          val row = splitInput(1).toInt
+          val col = splitInput(2).toInt
+          command match {
+            case "addCurrentPlayer" =>
+              setCell(row, col, grid.cell(row, col)
+                .addPlayer(playerList.getCurrentPlayer))
+            case "addZombie" =>
+              setCell(row, col, grid.cell(row, col)
+                .addEnemy("zombie"))
+            case "addMutant" =>
+              setCell(row, col, grid.cell(row, col)
+                .addEnemy("mutant"))
+            case "addBoss" =>
+              setCell(row, col, grid.cell(row, col)
+                .addEnemy("boss"))
+            case "removeZombie" =>
+              setCell(row, col, grid.cell(row, col)
+                .removeEnemy("zombie"))
+            case "removeMutant" =>
+              setCell(row, col, grid.cell(row, col)
+                .removeEnemy("mutant"))
+            case "removeBoss" =>
+              setCell(row, col, grid.cell(row, col)
+                .removeEnemy("boss"))
+          }
+        case 4 =>
+          val command = splitInput(0)
+          val row = splitInput(1).toInt
+          val col = splitInput(2).toInt
+          val value = splitInput(3)
+          if (command.equals("addPlayer")) {
+            addPlayer(row, col, value)
+          }
+          if (command.equals("removePlayer")) {
+            setCell(row, col, grid.cell(row, col).removePlayer(Player(value)))
+          }
+
+        case _ =>
+      }
+    }
+  }
+
 }
