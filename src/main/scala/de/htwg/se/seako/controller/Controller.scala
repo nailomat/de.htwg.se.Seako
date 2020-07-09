@@ -62,7 +62,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
   }
 
   def movePlayer(name: String, direction: String): Unit = {
-    var position = grid.playerPos(Player(name))
+    val position = grid.playerPos(Player(name))
     direction match {
       case "up" =>
         addPlayer(position._1 - 1 , position._2, name)
@@ -76,6 +76,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
       case "left" =>
         addPlayer(position._1, position._2 - 1, name)
         removePlayer(position._1, position._2, name)
+      case _ =>
     }
   }
   //  def removeZombie(row: Int, col: Int): Unit = {
@@ -132,30 +133,33 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
           }
         case 3 =>
           val command = splitInput(0)
-          val row = splitInput(1).toInt
-          val col = splitInput(2).toInt
+          val row = splitInput(1)
+          val col = splitInput(2)
           command match {
             case "addCurrentPlayer" =>
-              setCell(row, col, grid.cell(row, col)
+              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
                 .addPlayer(playerList.getCurrentPlayer))
             case "addZombie" =>
-              setCell(row, col, grid.cell(row, col)
+              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
                 .addEnemy("zombie"))
             case "addMutant" =>
-              setCell(row, col, grid.cell(row, col)
+              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
                 .addEnemy("mutant"))
             case "addBoss" =>
-              setCell(row, col, grid.cell(row, col)
+              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
                 .addEnemy("boss"))
             case "removeZombie" =>
-              setCell(row, col, grid.cell(row, col)
+              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
                 .removeEnemy("zombie"))
             case "removeMutant" =>
-              setCell(row, col, grid.cell(row, col)
+              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
                 .removeEnemy("mutant"))
             case "removeBoss" =>
-              setCell(row, col, grid.cell(row, col)
+              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
                 .removeEnemy("boss"))
+            case "move" =>
+              movePlayer(row, col)
+            case _ =>
           }
         case 4 =>
           val command = splitInput(0)
