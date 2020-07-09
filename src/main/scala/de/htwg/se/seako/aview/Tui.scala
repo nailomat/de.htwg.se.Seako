@@ -44,37 +44,40 @@ class Tui(controller: Controller) extends Observer {
               println("Command unknown")
             }
           case 2 =>
-            val commad = splitInput(0)
+            val command = splitInput(0)
             val name = splitInput(1)
-            commad match {
+            command match {
               case "playerPos" => controller.getPlayerPos(name)
             }
           case 3 =>
             val command = splitInput(0)
-            val row = splitInput(1).toInt
-            val col = splitInput(2).toInt
+            val row = splitInput(1)
+            val col = splitInput(2)
             command match {
               case "addCurrentPlayer" =>
-                controller.setCell(row, col, controller.grid.cell(row, col)
+                controller.setCell(row.toInt, col.toInt, controller.grid.cell(row.toInt, col.toInt)
                   .addPlayer(controller.playerList.getCurrentPlayer))
               case "addZombie" =>
-                controller.setCell(row, col, controller.grid.cell(row, col)
+                controller.setCell(row.toInt, col.toInt, controller.grid.cell(row.toInt, col.toInt)
                   .addEnemy("zombie"))
               case "addMutant" =>
-                controller.setCell(row, col, controller.grid.cell(row, col)
+                controller.setCell(row.toInt, col.toInt, controller.grid.cell(row.toInt, col.toInt)
                   .addEnemy("mutant"))
               case "addBoss" =>
-                controller.setCell(row, col, controller.grid.cell(row, col)
+                controller.setCell(row.toInt, col.toInt, controller.grid.cell(row.toInt, col.toInt)
                   .addEnemy("boss"))
               case "removeZombie" =>
-                controller.setCell(row, col, controller.grid.cell(row, col)
+                controller.setCell(row.toInt, col.toInt, controller.grid.cell(row.toInt, col.toInt)
                   .removeEnemy("zombie"))
               case "removeMutant" =>
-                controller.setCell(row, col, controller.grid.cell(row, col)
+                controller.setCell(row.toInt, col.toInt, controller.grid.cell(row.toInt, col.toInt)
                   .removeEnemy("mutant"))
               case "removeBoss" =>
-                controller.setCell(row, col, controller.grid.cell(row, col)
+                controller.setCell(row.toInt, col.toInt, controller.grid.cell(row.toInt, col.toInt)
                   .removeEnemy("boss"))
+              case "move" =>
+                controller.movePlayer(row, col)
+              case _ =>
             }
           case 4 =>
             val command = splitInput(0)
