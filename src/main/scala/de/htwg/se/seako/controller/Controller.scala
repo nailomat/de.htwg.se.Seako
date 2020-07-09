@@ -64,6 +64,9 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
     publish(new CellChange)
   }
 
+  def cell(row: Int, col: Int): Unit = grid.cell(row, col)
+
+  def gridSize = grid.size
   def undo(): Unit = {
     undoManager.undoStep()
     publish(new CellChange)

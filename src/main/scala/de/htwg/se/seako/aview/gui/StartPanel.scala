@@ -3,9 +3,9 @@ package de.htwg.se.seako.aview.gui
 import de.htwg.se.seako.controller.{Controller, StartGame}
 import javax.swing.BorderFactory
 
-import scala.swing.{Button, Dimension, Frame}
+import scala.swing.{Button, Dimension, FlowPanel, Frame}
 
-class StartFrame(controller: Controller) extends Frame {
+class StartPanel(controller: Controller) extends Frame{
 
   listenTo(controller)
 
@@ -22,7 +22,11 @@ class StartFrame(controller: Controller) extends Frame {
     border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
     visible = true
   }
-  startButton.visible = true
+
+  contents = new FlowPanel() {
+    contents += startButton
+
+  }
 
   reactions += {
     case event: StartGame =>
