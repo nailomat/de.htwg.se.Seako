@@ -59,25 +59,14 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
   def getPlayerPos(name: String): Unit = {
     val currentcell = grid.playerPos(Player(name))
     println("Player " + name + " is Currently on " + currentcell)
+    notifyObservers()
   }
 
   def movePlayer(name: String, direction: String): Unit = {
     val position = grid.playerPos(Player(name))
-    direction match {
-      case "up" =>
-        addPlayer(position._1 - 1 , position._2, name)
-        removePlayer(position._1, position._2, name)
-      case "down" =>
-        addPlayer(position._1 + 1 , position._2, name)
-        removePlayer(position._1, position._2, name)
-      case "right" =>
-        addPlayer(position._1, position._2 + 1, name)
-        removePlayer(position._1, position._2, name)
-      case "left" =>
-        addPlayer(position._1, position._2 - 1, name)
-        removePlayer(position._1, position._2, name)
-      case _ =>
-    }
+    grid = grid.replaceCell(grid.movePlayer(Player(name),direction)._1, grid.movePlayer(Player(name), direction)._2, grid.cell(grid.movePlayer(Player(name),direction)._1, grid.movePlayer(Player(name), direction)._2).addPlayer(Player(name)))
+    grid = grid.replaceCell(position._1, position._2, grid.cell(position._1, position._2).removePlayer(Player(name)))
+    notifyObservers()
   }
   //  def removeZombie(row: Int, col: Int): Unit = {
   //    grid = grid.replaceCell(row, col, grid.cell(row, col))

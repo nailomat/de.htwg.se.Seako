@@ -25,6 +25,31 @@ case class Grid[T](rows: Vector[Vector[T]]) {
     (currentRow,currentCol,cell(currentRow, currentCol))
   }
 
+
+  def movePlayer(player: Player, direction: String): (Int,Int) = {
+    val position = playerPos(player)
+    var newRow = position._1
+    var newCol = position._2
+    direction match {
+      case "up" =>
+        newRow = position._1 - 1
+        newCol = position._2
+        (newRow,newCol)
+      case "down" =>
+        newRow = position._1 + 1
+        newCol = position._2
+        (newRow,newCol)
+      case "right" =>
+        newRow = position._1
+        newCol = position._2 + 1
+        (newRow,newCol)
+      case "left" =>
+        newRow = position._1
+        newCol = position._2 - 1
+        (newRow,newCol)
+    }
+  }
+
   override def toString: String = {
 
     var output = "\n"
