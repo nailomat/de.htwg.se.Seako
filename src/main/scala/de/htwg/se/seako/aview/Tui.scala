@@ -13,6 +13,9 @@ class Tui(controller: Controller) extends Observer {
       case "undo" => controller.undo()
       case "redo" => controller.redo()
       case "start" => controller.startGame()
+      case "small" => controller.createEmptyGrid(5)
+      case "medium" => controller.createEmptyGrid(10)
+      case "big" => controller.createEmptyGrid(20)
       case _ => controller.validateLongString(input)
     }
   }

@@ -105,13 +105,6 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
               println(playerList)
             }
           }
-          if (gameStatus.equals(GameStatus.CREATEGAME)) {
-            splitInput(0) match {
-              case "small" => createEmptyGrid(5)
-              case "medium" => createEmptyGrid(10)
-              case "big" => createEmptyGrid(20)
-            }
-          }
           if (splitInput(0).equals("np")) {
             nextPlayer()
           }
