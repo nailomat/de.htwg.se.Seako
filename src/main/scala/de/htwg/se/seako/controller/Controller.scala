@@ -68,19 +68,6 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Obser
     grid = grid.replaceCell(position._1, position._2, grid.cell(position._1, position._2).removePlayer(Player(name)))
     notifyObservers()
   }
-  //  def removeZombie(row: Int, col: Int): Unit = {
-  //    grid = grid.replaceCell(row, col, grid.cell(row, col))
-  //    notifyObservers()
-  //  }
-
-  //
-  //  def getPlayerPos(name: String): Unit = {
-  //    grid.
-  //  }
-  //
-  //  def movePlayer(row: Int, col: Int, name: String) : Unit = {
-  //    grid = grid.replaceCell(row, col, grid.cell(r))
-  //  }
 
   def gridToString: String = grid.toString
 
