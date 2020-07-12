@@ -1,7 +1,6 @@
 package de.htwg.se.seako.aview.gui
 
 import de.htwg.se.seako.controller.{CellChange, Controller}
-import de.htwg.se.seako.model.Cell
 
 import scala.swing._
 
@@ -13,18 +12,20 @@ class CellPanel(row: Int, col: Int, controller: Controller) extends FlowPanel {
 
   def myCell = controller.cell(row, col)
 
-  def cellText(row: Int, col: Int) = controller.cell(row, col).asInstanceOf[Cell].fog.value.toString
-
+//  def cellText(row: Int, col: Int) = controller.cell(row, col)
+  def cellText(row: Int, col: Int) = "HELLO"
   val label =
     new Label {
       text = cellText(row, col)
-      font = new Font("Verdana", 1, 36)
+      foreground = java.awt.Color.WHITE
+      font = new Font("Verdana", 1, 10)
     }
 
   val cell = new BoxPanel(Orientation.Vertical) {
     contents += label
     preferredSize = new Dimension(51, 51)
-    //    background = if (controller.isGiven(row, col)) givenCellColor else cellColor
+    background = java.awt.Color.BLACK
+    //    background = if (controller.isGiven(rCellow, col)) givenCellColor else cellColor
     border = Swing.BeveledBorder(Swing.Raised)
     listenTo(mouse.clicks)
     listenTo(controller)
@@ -35,6 +36,8 @@ class CellPanel(row: Int, col: Int, controller: Controller) extends FlowPanel {
       }
     }
   }
+
+  contents += cell
   //
   //  val candidatelist = (1 to controller.gridSize).map {
   //    (value =>

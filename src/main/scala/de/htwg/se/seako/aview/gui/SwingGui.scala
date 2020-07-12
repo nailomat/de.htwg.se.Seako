@@ -23,12 +23,14 @@ class SwingGui(controller: Controller) extends Frame {
   }
 
   def gridPanel: GridPanel = new GridPanel(controller.grid.size, controller.grid.size) {
-    background = java.awt.Color.BLACK
+    background = java.awt.Color.WHITE
     for {
       row <- 0 until controller.grid.size
       col <- 0 until controller.grid.size
     } {
       val cellPanel = new CellPanel(row, col, controller)
+      contents += cellPanel
+
     }
   }
 
@@ -40,9 +42,13 @@ class SwingGui(controller: Controller) extends Frame {
     visible = true
   }
 
-  contents = new BorderPanel {
-    add(startButton, BorderPanel.Position.Center )
+  val cellPanel: CellPanel = new CellPanel(0, 0, controller)
 
+
+  contents = new BorderPanel {
+//    add(startButton, BorderPanel.Position.Center )
+//    add(gridPanel, BorderPanel.Position.Center)
+    add(cellPanel, BorderPanel.Position.Center)
   }
 
   reactions += {

@@ -57,6 +57,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
     grid = grid.replaceCell(row, col, grid.cell(row, col).removeEnemy(enemy))
     publish(new RemoveZombie)
   }
+
   def gridToString: String = grid.toString
 
   def setCell(row: Int, col: Int, cell: Cell): Unit = {
@@ -67,6 +68,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
   def cell(row: Int, col: Int): Unit = grid.cell(row, col)
 
   def gridSize = grid.size
+
   def undo(): Unit = {
     undoManager.undoStep()
     publish(new CellChange)
@@ -84,17 +86,28 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
         case 1 =>
           if (gameStatus.equals(GameStatus.INSERTPLAYER)) {
             splitInput(0) match {
-            case "y" =>
+              case "y" =>
                 println("INSERT NAME:")
-            case "n" =>
-              println("SELECT FIELD SIZE:")
-              println("small | medium | big")
-              setGameStatus(GameStatus.CREATEGAME);
-            case _ =>
-              addPlayerList(splitInput(0))
-              println(playerList)
+              case "n" =>
+                println("SELECT FIELD SIZE:")
+                println("small | medium | big")
+                setGameStatus(GameStatus.CREATEGAME)
+              case _ =>
+                addPlayerList(splitInput(0))
+                println(playerList)
             }
-          }
+          } else if (gameStatus.equals(GameStatus.CREATEGAME)) {
+              splitInput(0) match {
+                case "small" =>
+                  createEmptyGrid(5)
+                case "medium" =>
+                  createEmptyGrid(10)
+                case "big" =>
+                  createEmptyGrid(20)
+                case _ => println("unknown size")
+              }
+            }
+
           if (splitInput(0).equals("np")) {
             nextPlayer()
           }

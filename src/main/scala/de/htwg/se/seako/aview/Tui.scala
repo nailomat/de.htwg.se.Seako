@@ -14,14 +14,12 @@ class Tui(controller: Controller) extends Reactor {
       case "undo" => controller.undo()
       case "redo" => controller.redo()
       case "start" => controller.startGame()
-      case "small" => controller.createEmptyGrid(5)
-      case "medium" => controller.createEmptyGrid(10)
-      case "big" => controller.createEmptyGrid(20)
       case _ => controller.validateLongString(input)
     }
   }
 
   reactions += {
+    case event: SetGrid => print(controller.gridToString)
     case event: CellChange => print(controller.gridToString)
     case event: AddPlayer => print(controller.gridToString)
     case event: RemovePlayer => print(controller.gridToString)
