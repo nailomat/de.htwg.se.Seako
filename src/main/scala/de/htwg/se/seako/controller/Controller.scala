@@ -58,17 +58,28 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
     publish(new RemoveZombie)
   }
 
+
+  //FUNKTION IS NOT USED! ONLY FOR TEST PURPOSE
   def getPlayerPos(name: String): Unit = {
     val currentcell = grid.playerPos(Player(name))
     println("Player " + name + " is Currently on " + currentcell)
     //notifyObservers()
   }
 
-  def movePlayer(name: String, direction: String): Unit = {
-    val position = grid.playerPos(Player(name))
-    grid = grid.replaceCell(grid.movePlayer(Player(name),direction)._1, grid.movePlayer(Player(name), direction)._2, grid.cell(grid.movePlayer(Player(name),direction)._1, grid.movePlayer(Player(name), direction)._2).addPlayer(Player(name)))
-    grid = grid.replaceCell(position._1, position._2, grid.cell(position._1, position._2).removePlayer(Player(name)))
+  def movePlayer(direction: String): Unit = {
+    val name = playerList.getCurrentPlayer
+    val position = grid.playerPos(name)
+    grid = grid.replaceCell(grid.movePlayer(name,direction)._1, grid.movePlayer(name, direction)._2, grid.cell(grid.movePlayer(name,direction)._1, grid.movePlayer(name, direction)._2).addPlayer(name))
+    grid = grid.replaceCell(position._1, position._2, grid.cell(position._1, position._2).removePlayer(name))
     publish(new CellChange)
+  }
+
+  def attackEnemy(): Unit = {
+    val attackPower = new Dice
+    val name = playerList.getCurrentPlayer
+    val position = grid.playerPos(name)
+    grid = grid.replaceCell(position._1, position._2, grid.cell(position._1, position._2).attackEnemy(name, attackPower.rolldice))
+    publish(new ChangeEnemy)
   }
 
   def gridToString: String = grid.toString
@@ -113,16 +124,30 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
               splitInput(0) match {
                 case "small" =>
                   createEmptyGrid(5)
+                  setGameStatus(GameStatus.NEWROUND)
                 case "medium" =>
                   createEmptyGrid(10)
+                  setGameStatus(GameStatus.NEWROUND)
                 case "big" =>
                   createEmptyGrid(20)
+                  setGameStatus(GameStatus.NEWROUND)
                 case _ => println("unknown size")
               }
             }
 
           if (splitInput(0).equals("np")) {
             nextPlayer()
+          }
+          if (splitInput(0).equals("attack")) {
+            attackEnemy()
+          }
+        case 2 =>
+          val command = splitInput(0)
+          val value = splitInput(1)
+          command match {
+            case "move" =>
+              movePlayer(value)
+            case _ =>
           }
         case 3 =>
           val command = splitInput(0)
@@ -150,8 +175,6 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
             case "removeBoss" =>
               setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
                 .removeEnemy("boss"))
-            case "move" =>
-              movePlayer(row, col)
             case _ =>
           }
         case 4 =>

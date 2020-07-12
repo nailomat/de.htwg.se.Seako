@@ -28,19 +28,30 @@ case class Enemies(enemies: List[Enemy]) {
 //    value
 //  }
 
+  def amountOfEnemys() : (Int,Int,Int) ={
+
+    val amtZ = enemies.count(p => p.isInstanceOf[Zombie])
+    val amtM = enemies.count(p => p.isInstanceOf[Mutant])
+    val amtB = enemies.count(p => p.isInstanceOf[Boss])
+
+    (amtZ,amtM,amtB)
+  }
+
   def removeEnemy (enemy: String): Enemies = {
     var tmpEnemy = enemies
     var x = -1
       enemy match {
-        case "zombie"=> x = tmpEnemy.indexWhere(p => p.isInstanceOf[Zombie])
-        case "mutant"=> x = tmpEnemy.indexWhere(p => p.isInstanceOf[Mutant])
-        case "boss"=> x = tmpEnemy.indexWhere(p => p.isInstanceOf[Boss])
+        case "zombie"=>
+          x = tmpEnemy.indexWhere(p => p.isInstanceOf[Zombie])
+        case "mutant"=>
+          x = tmpEnemy.indexWhere(p => p.isInstanceOf[Mutant])
+        case "boss"=>
+          x = tmpEnemy.indexWhere(p => p.isInstanceOf[Boss])
       }
 
     if(x >= 0) {
      tmpEnemy = tmpEnemy.patch(x,Nil,1)
     }
-
     this.copy(enemies = tmpEnemy)
   }
 
@@ -49,9 +60,12 @@ case class Enemies(enemies: List[Enemy]) {
     var tmpEnemy = enemies
     val newEnemy = Enemy(enemy)
     enemy match {
-      case "zombie" => tmpEnemy = enemies :+ newEnemy.asInstanceOf[Zombie]
-      case "mutant" => tmpEnemy = enemies :+ newEnemy.asInstanceOf[Mutant]
-      case "boss" => tmpEnemy = enemies :+ newEnemy.asInstanceOf[Boss]
+      case "zombie" =>
+        tmpEnemy = enemies :+ newEnemy.asInstanceOf[Zombie]
+      case "mutant" =>
+        tmpEnemy = enemies :+ newEnemy.asInstanceOf[Mutant]
+      case "boss" =>
+        tmpEnemy = enemies :+ newEnemy.asInstanceOf[Boss]
     }
     this.copy(enemies = tmpEnemy)
   }
