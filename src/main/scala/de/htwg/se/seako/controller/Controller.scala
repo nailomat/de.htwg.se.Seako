@@ -65,7 +65,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
     publish(new CellChange)
   }
 
-  def cell(row: Int, col: Int): Unit = grid.cell(row, col)
+  def cell(row: Int, col: Int): Cell = grid.cell(row, col)
 
   def gridSize = grid.size
 

@@ -13,7 +13,7 @@ class CellPanel(row: Int, col: Int, controller: Controller) extends FlowPanel {
   def myCell = controller.cell(row, col)
 
 //  def cellText(row: Int, col: Int) = controller.cell(row, col)
-  def cellText(row: Int, col: Int) = "HELLO"
+  def cellText(row: Int, col: Int) = controller.cell(row,col).fog.value.toString
   val label =
     new Label {
       text = cellText(row, col)

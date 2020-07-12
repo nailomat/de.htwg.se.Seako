@@ -28,6 +28,7 @@ class SwingGui(controller: Controller) extends Frame {
       row <- 0 until controller.grid.size
       col <- 0 until controller.grid.size
     } {
+      println(row, col)
       val cellPanel = new CellPanel(row, col, controller)
       contents += cellPanel
 
@@ -46,9 +47,9 @@ class SwingGui(controller: Controller) extends Frame {
 
 
   contents = new BorderPanel {
-//    add(startButton, BorderPanel.Position.Center )
-//    add(gridPanel, BorderPanel.Position.Center)
-    add(cellPanel, BorderPanel.Position.Center)
+    add(startButton, BorderPanel.Position.North)
+    add(gridPanel, BorderPanel.Position.Center)
+//    add(cellPanel, BorderPanel.Position.Center)
   }
 
   reactions += {
