@@ -35,7 +35,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
 
   def createEmptyGrid(size: Int): Unit = {
     grid = new Grid[Cell](size, Cell(Nil, Enemies(Nil), Terrain(0), Fog(1)))
-    publish(new SetGrid)
+    publish(new GridSizeChanged(size))
   }
 
   def addPlayer(row: Int, col: Int, name: String): Unit = {
@@ -68,14 +68,14 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
     val position = grid.playerPos(Player(name))
     grid = grid.replaceCell(grid.movePlayer(Player(name),direction)._1, grid.movePlayer(Player(name), direction)._2, grid.cell(grid.movePlayer(Player(name),direction)._1, grid.movePlayer(Player(name), direction)._2).addPlayer(Player(name)))
     grid = grid.replaceCell(position._1, position._2, grid.cell(position._1, position._2).removePlayer(Player(name)))
-    publish(new CellChange)
+    publish(new CellChanged)
   }
 
   def gridToString: String = grid.toString
 
   def setCell(row: Int, col: Int, cell: Cell): Unit = {
     undoManager.doStep(new SetCommand(row, col, cell, this))
-    publish(new CellChange)
+    publish(new CellChanged)
   }
 
   def cell(row: Int, col: Int): Cell = grid.cell(row, col)
@@ -84,12 +84,12 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
 
   def undo(): Unit = {
     undoManager.undoStep()
-    publish(new CellChange)
+    publish(new CellChanged)
   }
 
   def redo(): Unit = {
     undoManager.redoStep()
-    publish(new CellChange)
+    publish(new CellChanged)
   }
 
   def validateLongString(input: String): Unit = {

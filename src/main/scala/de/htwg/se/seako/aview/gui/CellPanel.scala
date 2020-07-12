@@ -1,6 +1,6 @@
 package de.htwg.se.seako.aview.gui
 
-import de.htwg.se.seako.controller.{CellChange, Controller}
+import de.htwg.se.seako.controller.{CellChanged, Controller}
 
 import scala.swing._
 
@@ -30,7 +30,7 @@ class CellPanel(row: Int, col: Int, controller: Controller) extends FlowPanel {
     listenTo(mouse.clicks)
     listenTo(controller)
     reactions += {
-      case e: CellChange => {
+      case e: CellChanged => {
         label.text = cellText(row, col)
         repaint
       }
