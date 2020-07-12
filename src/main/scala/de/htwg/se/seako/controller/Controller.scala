@@ -78,7 +78,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
     val attackPower = new Dice
     val name = playerList.getCurrentPlayer
     val position = grid.playerPos(name)
-    grid = grid.replaceCell(position._1, position._2, grid.cell(position._1, position._2).attackEnemy(name, attackPower.rolldice))
+    removeEnemy(position._1, position._2, grid.cell(position._1, position._2).attackEnemy(name, attackPower.rolldice))
     publish(new ChangeEnemy)
   }
 

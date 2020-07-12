@@ -1,7 +1,5 @@
 package de.htwg.se.seako.model
 
-import de.htwg.se.seako.model
-
 case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: Fog) {
 
   //  def isSet: Boolean = terrain.value != 0
@@ -9,9 +7,9 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
   def addEnemy(enemy: String): Cell = {
     var tempEnemy = enemies
     enemy match {
-      case "zombie" =>  tempEnemy = enemies.addEnemy(enemy)
+      case "zombie" => tempEnemy = enemies.addEnemy(enemy)
       case "mutant" => tempEnemy = enemies.addEnemy(enemy)
-      case "boss" => tempEnemy= enemies.addEnemy(enemy)
+      case "boss" => tempEnemy = enemies.addEnemy(enemy)
     }
     this.copy(enemies = tempEnemy)
   }
@@ -19,9 +17,9 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
   def removeEnemy(enemy: String): Cell = {
     var tempEnemy = enemies
     enemy match {
-      case "zombie" =>  tempEnemy = enemies.removeEnemy(enemy)
+      case "zombie" => tempEnemy = enemies.removeEnemy(enemy)
       case "mutant" => tempEnemy = enemies.removeEnemy(enemy)
-      case "boss" => tempEnemy= enemies.removeEnemy(enemy)
+      case "boss" => tempEnemy = enemies.removeEnemy(enemy)
     }
     this.copy(enemies = tempEnemy)
   }
@@ -39,23 +37,18 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
   }
 
 
-
-  def attackEnemy (player: Player, power : Int): Cell = {
+  def attackEnemy(player: Player, power: Int): String = {
+    var TheEnemy = ""
     val newEnemy = enemies
     val attack = newEnemy.amountOfEnemys()
-    if(attack._1 > 0 && power > 1){
-        removeEnemy("zombie")
-
-        //nochmal
-      }
-    else if(attack._2 > 0  && power > 2){
-        removeEnemy("mutant")
-      }
-    else if (attack._3 > 0 && power > 4) {
-        removeEnemy("boss")
-      }
-    val oldEnemy = enemies
-    this.copy(enemies = oldEnemy)
+    if (attack._1 > 0 && power > 1) {
+      TheEnemy = "zombie"
+    } else if (attack._2 > 0 && power > 2) {
+      TheEnemy = "mutant"
+    } else if (attack._3 > 0 && power > 4) {
+      TheEnemy = "boss"
+    }
+    TheEnemy
   }
 
   def topRow(): String = "⌈          ⌉"
