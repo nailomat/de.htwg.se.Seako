@@ -13,3 +13,4 @@ class RemoveEnemy extends Event
 class AddZombie extends Event
 class RemoveZombie extends Event
 class AddMutant extends Event
+class ChangeEnemy extends Event
