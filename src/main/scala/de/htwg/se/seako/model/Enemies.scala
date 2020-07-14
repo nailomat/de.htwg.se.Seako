@@ -37,15 +37,15 @@ case class Enemies(enemies: List[Enemy]) {
     (amtZ,amtM,amtB)
   }
 
-  def removeEnemy (enemy: String): Enemies = {
+  def removeEnemy (enemy: Option[String]): Enemies = {
     var tmpEnemy = enemies
     var x = -1
       enemy match {
-        case "zombie"=>
+        case Some("zombie")=>
           x = tmpEnemy.indexWhere(p => p.isInstanceOf[Zombie])
-        case "mutant"=>
+        case Some("mutant")=>
           x = tmpEnemy.indexWhere(p => p.isInstanceOf[Mutant])
-        case "boss"=>
+        case Some("boss")=>
           x = tmpEnemy.indexWhere(p => p.isInstanceOf[Boss])
       }
 

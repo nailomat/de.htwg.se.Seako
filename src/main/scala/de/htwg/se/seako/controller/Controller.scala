@@ -4,6 +4,7 @@ import de.htwg.se.seako.controller.GameStatus._
 import de.htwg.se.seako.model._
 import de.htwg.se.seako.util.UndoManager
 
+import scala.swing.Dialog.Options
 import scala.swing.Publisher
 
 class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publisher {
@@ -53,7 +54,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
     publish(new AddEnemy)
   }
 
-  def removeEnemy(row: Int, col: Int, enemy: String): Unit = {
+  def removeEnemy(row: Int, col: Int, enemy: Option[String]): Unit = {
     grid = grid.replaceCell(row, col, grid.cell(row, col).removeEnemy(enemy))
     publish(new RemoveZombie)
   }
@@ -168,13 +169,13 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
                 .addEnemy("boss"))
             case "removeZombie" =>
               setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
-                .removeEnemy("zombie"))
+                .removeEnemy(Some("zombie")))
             case "removeMutant" =>
               setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
-                .removeEnemy("mutant"))
+                .removeEnemy(Some("mutant")))
             case "removeBoss" =>
               setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
-                .removeEnemy("boss"))
+                .removeEnemy(Some("boss")))
             case _ =>
           }
         case 4 =>
