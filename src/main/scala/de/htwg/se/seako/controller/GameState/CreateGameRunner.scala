@@ -12,19 +12,19 @@ case class CreateGameRunner(controller: Controller, input: String) extends State
         splitInput(0) match {
           case "small" =>
             controller.createEmptyGrid(5)
-            for(controller.playerList.players <- 0 until numberPlayers) {
+            for(numberPlayers <- controller.playerList.players) {
               controller.setCell(0, 0, controller.grid.cell(0, 0)
                 .addPlayer(controller.playerList.getCurrentPlayer))
             }
           case "medium" =>
             controller.createEmptyGrid(10)
-            for(controller.playerList.players <- 0 until numberPlayers) {
+            for(numberPlayers <- controller.playerList.players) {
               controller.setCell(0, 0, controller.grid.cell(0, 0)
                 .addPlayer(controller.playerList.getCurrentPlayer))
             }
           case "big" =>
             controller.createEmptyGrid(20)
-            for(controller.playerList.players <- 0 until numberPlayers) {
+            for(numberPlayers <- controller.playerList.players) {
               controller.setCell(0, 0, controller.grid.cell(0, 0)
                 .addPlayer(controller.playerList.getCurrentPlayer))
             }

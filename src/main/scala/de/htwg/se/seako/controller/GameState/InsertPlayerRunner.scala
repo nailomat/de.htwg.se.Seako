@@ -5,7 +5,7 @@ import de.htwg.se.seako.controller._
 case class InsertPlayerRunner(controller: Controller, input: String) extends StateRunner {
   def on():Unit = {
     println("Insert Players")
-    while (true) {
+   // while (true) {
       val splitInput = input.split(" ")
       splitInput.length match {
         case 1 =>
@@ -15,7 +15,7 @@ case class InsertPlayerRunner(controller: Controller, input: String) extends Sta
             case "n" =>
               println("SELECT FIELD SIZE:")
               println("small | medium | big")
-              false
+            //  false
             case _ =>
               controller.addPlayerList(splitInput(0))
               println(controller.playerList)
@@ -23,7 +23,7 @@ case class InsertPlayerRunner(controller: Controller, input: String) extends Sta
         case _ =>
 
       }
-    }
+   // }
   }
 
   def off(): Unit = {

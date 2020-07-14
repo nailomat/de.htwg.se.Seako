@@ -5,25 +5,24 @@ import de.htwg.se.seako.controller.GameStatus._
 import de.htwg.se.seako.model._
 import de.htwg.se.seako.util.UndoManager
 
-import scala.swing.Dialog.Options
 import scala.swing.Publisher
 
 class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publisher {
 
+
+
+
   val undoManager = new UndoManager
-  var gameStatus: GameStatus = START
 
-  def setGameStatus(status: GameStatus): Unit = {
-    gameStatus = status
-  }
 
-  val gameSystem:GameSystem = GameSystem()
+
+
 
 
   def startGame(): Unit = {
     println("GAME HAS STARTED")
-    println("INSERT PLAYER  NAME:")
-    gameStatus = INSERTPLAYER
+//    println("INSERT PLAYER  NAME:")
+
   }
 
   def addPlayerList(playerName: String): Unit = {
@@ -110,11 +109,14 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
 
   def validateLongString(input: String): Unit = {
 
+    val gameSystem: GameSystem = GameSystem(new Controller(grid, playerList), input: String)
     while (true) {
       gameSystem.displayState()
       if (input.nonEmpty) {
         if (gameSystem.currentState.isInstanceOf[InsertPlayer]) {
-          gameSystem.changeState()
+          if (input == "ready") {
+            gameSystem.changeState()
+          }
         }
         if (gameSystem.currentState.isInstanceOf[CreateGame]) {
           gameSystem.changeState()

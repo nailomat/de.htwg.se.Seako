@@ -14,7 +14,7 @@ case class GameSystem(controller: Controller, input: String) {
   var newRound:State = new NewRound(this, NewRoundRunner(controller: Controller))
   var playerTurn:State = new PlayerTurn (this, PlayerTurnRunner(controller: Controller, input: String))
   var enemyTurn:State = new EnemyTurn(this, EnemyTurnRunner(controller: Controller))
-  var endGame:State = new EndGame(this, EndGameRunner)
+  var endGame:State = new EndGame(this, EndGameRunner())
 
   def changeState():Unit = {
     currentState.changeState()

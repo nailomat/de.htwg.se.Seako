@@ -6,7 +6,7 @@ import scala.swing.Reactor
 
 class Tui(controller: Controller) extends Reactor {
   listenTo(controller)
-  println("Type \"start\" to start the game")
+ // println("Type \"start\" to start the game")
 
   def processInputLine(input: String): Unit = {
     input match {
