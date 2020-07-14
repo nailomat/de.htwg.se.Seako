@@ -1,5 +1,6 @@
 package de.htwg.se.seako.controller
 
+import de.htwg.se.seako.controller.GameState._
 import de.htwg.se.seako.controller.GameStatus._
 import de.htwg.se.seako.model._
 import de.htwg.se.seako.util.UndoManager
@@ -15,6 +16,9 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
   def setGameStatus(status: GameStatus): Unit = {
     gameStatus = status
   }
+
+  val gameSystem:GameSystem = GameSystem()
+
 
   def startGame(): Unit = {
     println("GAME HAS STARTED")
@@ -105,37 +109,35 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
   }
 
   def validateLongString(input: String): Unit = {
+
+    while (true) {
+      gameSystem.displayState()
+      if (input.nonEmpty) {
+        if (gameSystem.currentState.isInstanceOf[InsertPlayer]) {
+          gameSystem.changeState()
+        }
+        if (gameSystem.currentState.isInstanceOf[CreateGame]) {
+          gameSystem.changeState()
+        }
+        if (gameSystem.currentState.isInstanceOf[NewRound]) {
+          gameSystem.changeState()
+        }
+        if (gameSystem.currentState.isInstanceOf[PlayerTurn]) {
+          gameSystem.changeState()
+        }
+        if (gameSystem.currentState.isInstanceOf[EnemyTurn]) {
+          gameSystem.changeState()
+        }
+        if (gameSystem.currentState.isInstanceOf[EndGame]) {
+          false
+        }
+      }
+    }
+
     if (input.nonEmpty) {
       val splitInput = input.split(" ")
       splitInput.length match {
         case 1 =>
-          if (gameStatus.equals(GameStatus.INSERTPLAYER)) {
-            splitInput(0) match {
-              case "y" =>
-                println("INSERT NAME:")
-              case "n" =>
-                println("SELECT FIELD SIZE:")
-                println("small | medium | big")
-                setGameStatus(GameStatus.CREATEGAME)
-              case _ =>
-                addPlayerList(splitInput(0))
-                println(playerList)
-            }
-          } else if (gameStatus.equals(GameStatus.CREATEGAME)) {
-              splitInput(0) match {
-                case "small" =>
-                  createEmptyGrid(5)
-                  setGameStatus(GameStatus.NEWROUND)
-                case "medium" =>
-                  createEmptyGrid(10)
-                  setGameStatus(GameStatus.NEWROUND)
-                case "big" =>
-                  createEmptyGrid(20)
-                  setGameStatus(GameStatus.NEWROUND)
-                case _ => println("unknown size")
-              }
-            }
-
           if (splitInput(0).equals("np")) {
             nextPlayer()
           }
