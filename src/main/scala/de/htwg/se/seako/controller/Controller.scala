@@ -132,6 +132,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
             case "addCurrentPlayer" =>
               setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
                 .addPlayer(playerList.getCurrentPlayer))
+              publish(new CellChanged)
             case "addZombie" =>
               setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
                 .addEnemy("zombie"))

@@ -19,10 +19,13 @@ class StartFrame(controller: Controller) extends Frame {
 
   val newButton: Button = createButton("")
   newButton.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/newGame.PNG")
+  newButton.contentAreaFilled = false
   val loadButton: Button = createButton("")
   loadButton.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/loadGame.PNG")
+  loadButton.contentAreaFilled = false
   val exitButton: Button = createButton("")
   exitButton.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/exitGame.PNG")
+  exitButton.contentAreaFilled = false
   contents = new BorderPanel() {
     val contents2: GridBagPanel = new GridBagPanel() {
       val gbc = new Constraints()

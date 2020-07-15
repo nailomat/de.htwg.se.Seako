@@ -12,43 +12,56 @@ class CellPanel(row: Int, col: Int, controller: Controller) extends FlowPanel {
   val cellColor = new Color(224, 224, 255)
   val highlightedCellColor = new Color(192, 255, 192)
 
-  val fogLabel: Label = new Label()
-
   def myCell: Cell = controller.cell(row, col)
 
-  def cellText(row: Int, col: Int): String = controller.cell(row, col).fog.value.toString
-
-  val label : Label =
-    new Label {
-//      text = cellText(row, col)
-//      foreground = java.awt.Color.WHITE
-//      font = new Font("Verdana", 1, 10)
-      icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/fogCell.PNG")
-    }
-
-  val cell: BoxPanel = new BoxPanel(Orientation.Vertical) {
-    contents += label
-    preferredSize = new Dimension(80, 80)
-    background = java.awt.Color.BLACK
-    //    background = if (controller.isGiven(rCellow, col)) givenCellColor else cellColor
-    border = Swing.BeveledBorder(Swing.Raised)
-    listenTo(mouse.clicks)
-    listenTo(controller)
-    reactions += {
-      case e: CellChanged => {
-        label.text = cellText(row, col)
-        repaint
+  def myCellType: String = {
+    var cellType = ""
+    if (myCell.fog.value == 1) {
+      cellType = "fog"
+    } else {
+      if (myCell.terrain.value == 1) {
+        cellType = "terrain"
+      } else {
+        if (myCell.players.length > 1) {
+          cellType = "player"
+        }
       }
     }
+    cellType
   }
+
+
+
+def cellText (row: Int, col: Int): String = controller.cell (row, col).fog.value.toString
+
+val label: Label = new Label
+myCellType match {
+  case "fog" => label.icon = new ImageIcon ("./src/main/scala/de/htwg/se/Seako/aview/media/FogCell.png")
+  case "field" => label.icon = new ImageIcon ("./src/main/scala/de/htwg/se/Seako/media/fieldCell.PNG")
+  case "terrain" => label.icon = new ImageIcon ("./src/main/scala/de/htwg/se/Seako/media/fieldCell.PNG")
+  case "player" => label.icon = new ImageIcon ("./src/main/scala/de/htwg/se/Seako/media/SelectPlayerCell.PNG")
+}
+
+  val cell: BoxPanel = new BoxPanel (Orientation.Vertical) {
+  contents += label
+  preferredSize = new Dimension (80, 80)
+  //border = Swing.BeveledBorder(Swing.Raised)
+  listenTo (mouse.clicks)
+  listenTo (controller)
+  reactions += {
+  case e: CellChanged => {
+  redraw ()
+}
+}
+}
 
   contents += cell
 
-  def redraw(): Unit = {
-    contents.clear()
-    label.text = cellText(row, col)
-    contents += cell
-    repaint
-  }
+  def redraw (): Unit = {
+  contents.clear ()
+
+  contents += cell
+  repaint
+}
 
 }

@@ -1,11 +1,9 @@
 package de.htwg.se.seako.aview.gui
 
-
 import de.htwg.se.seako.controller.{CellChanged, Controller, GridSizeChanged}
 import javax.swing.BorderFactory
 
 import scala.swing._
-
 
 class SwingGui(controller: Controller) extends Frame {
 
@@ -29,10 +27,24 @@ class SwingGui(controller: Controller) extends Frame {
       row <- 0 until controller.grid.size
       col <- 0 until controller.grid.size
     } {
-      val cellPanel = new CellPanel(row, col, controller)
-      cells(row)(col) = cellPanel
-      contents += cellPanel
-      listenTo(cellPanel)
+      if (controller.cell(row, col).fog.value == 1) {
+        val cellPanel = new CellPanel(row, col, controller)
+        cells(row)(col) = cellPanel
+        contents += cellPanel
+        listenTo(cellPanel)
+      } else {
+        if (controller.cell(row, col).terrain.value == 1) {
+          val cellPanel = new CellPanel(row, col, controller)
+          cells(row)(col) = cellPanel
+          listenTo(cellPanel)
+        } else {
+          if (controller.cell(row, col).players.length > 1) {
+            val cellPanel = new CellPanel(row, col, controller)
+            cells(row)(col) = cellPanel
+            listenTo(cellPanel)
+          }
+        }
+      }
     }
   }
 
@@ -44,18 +56,11 @@ class SwingGui(controller: Controller) extends Frame {
     visible = true
   }
 
-  val cellPanel: CellPanel = new CellPanel(0, 0, controller)
-
-
   contents = new BorderPanel {
         add(gridPanel, BorderPanel.Position.Center)
   }
 
   reactions += {
-//    case ButtonClicked(b) =>
-//      if (b == startButton) {
-//        controller.createEmptyGrid(5)
-//      }
     case event: GridSizeChanged => resize()
     case event: CellChanged => redraw()
   }
