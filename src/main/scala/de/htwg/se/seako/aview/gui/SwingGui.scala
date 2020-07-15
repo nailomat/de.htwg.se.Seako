@@ -2,17 +2,16 @@ package de.htwg.se.seako.aview.gui
 
 
 import de.htwg.se.seako.controller.{CellChanged, Controller, GridSizeChanged}
-import de.htwg.se.seako.model.PlayerList
 import javax.swing.BorderFactory
 
 import scala.swing._
 
 
-class SwingGui(controller: Controller, size: Int, playerList: PlayerList) extends Frame {
+class SwingGui(controller: Controller) extends Frame {
 
   listenTo(controller)
-  controller.createEmptyGrid(size)
-  title = "Seako"
+  controller.createEmptyGrid(controller.gridSize)
+  title = controller.gridSize.toString
   background = java.awt.Color.BLACK
   preferredSize = new Dimension(800, 800)
   centerOnScreen()
@@ -49,7 +48,6 @@ class SwingGui(controller: Controller, size: Int, playerList: PlayerList) extend
 
 
   contents = new BorderPanel {
-    add(startButton, BorderPanel.Position.North)
         add(gridPanel, BorderPanel.Position.Center)
   }
 
@@ -82,7 +80,7 @@ class SwingGui(controller: Controller, size: Int, playerList: PlayerList) extend
       row <- 0 until controller.gridSize
       col <- 0 until controller.gridSize
     } {
-      cells(row)(col).redraw
+      cells(row)(col).redraw()
     }
     repaint
   }

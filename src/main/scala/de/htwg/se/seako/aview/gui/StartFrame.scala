@@ -1,46 +1,61 @@
 package de.htwg.se.seako.aview.gui
 
 import de.htwg.se.seako.controller.Controller
-import de.htwg.se.seako.model.PlayerList
-import javax.swing.BorderFactory
+import javax.swing.{BorderFactory, ImageIcon}
 
 import scala.swing.event.{ButtonClicked, EditDone}
-import scala.swing.{Button, Dimension, FlowPanel, Frame, Label, TextField}
+import scala.swing.{BorderPanel, Button, Dimension, FlowPanel, Font, Frame, GridBagPanel, Label, TextField}
 
 class StartFrame(controller: Controller) extends Frame {
 
   listenTo(controller)
-
   title = "Seako"
-  background = java.awt.Color.BLACK
   preferredSize = new Dimension(800, 800)
-  centerOnScreen()
-  visible = true
+//  background = java.awt.Color.LIGHT_GRAY
 
-  var gridSize: Int = 1;
-
-  val newButton: Button = createButton("New Game")
-  val loadButton: Button = createButton("Load Game")
-  listenTo(newButton, loadButton)
-  contents = new FlowPanel() {
-    contents += newButton
-    contents += loadButton
+  val seako: Label = new Label() {
+    icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/seako.PNG")
   }
-  reactions += {
-    case ButtonClicked(b) =>
-      if (b == newButton) {
-        newGame()
-      } else if (b == loadButton) {
-        println("Incoming Feature")
-      }
+
+  val newButton: Button = createButton("")
+  newButton.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/newGame.PNG")
+  val loadButton: Button = createButton("")
+  loadButton.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/loadGame.PNG")
+  val exitButton: Button = createButton("")
+  exitButton.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/exitGame.PNG")
+  contents = new BorderPanel() {
+    val contents2: GridBagPanel = new GridBagPanel() {
+      val gbc = new Constraints()
+      gbc.gridx = 0
+      gbc.gridy = 1
+      add(newButton, gbc)
+      gbc.gridy = 40
+      add(loadButton, gbc)
+      gbc.gridy = 60
+      add(exitButton, gbc)
+    }
+    listenTo(newButton, loadButton, exitButton)
+    add(seako, BorderPanel.Position.North)
+    add(contents2, BorderPanel.Position.Center)
+    reactions += {
+      case ButtonClicked(b) =>
+        if (b == newButton) {
+          newGame()
+        } else if (b == loadButton) {
+          println("Incoming Feature")
+        } else if (b == exitButton) {
+          close
+        }
+    }
   }
 
   def newGame(): Unit = {
-//    object playerName extends TextField {columns = 10}
-    val playerName = new TextField(columns = 10)
+    //    object playerName extends TextField {columns = 10}
+    val playerName: TextField = new TextField(columns = 10)
     val playerNo = controller.playerList.players.size + 1
-    val anotherPlayer : Button = createButton("Add another Player")
-    val selectSize : Button = createButton("Continue To Size")
+    val anotherPlayer: Button = createButton("Add another Player")
+    val selectSize: Button = createButton("Continue To Size")
+    listenTo(playerName, anotherPlayer, selectSize)
 
     contents = new FlowPanel() {
       contents += new Label("Add Name for Player" + playerNo)
@@ -48,87 +63,67 @@ class StartFrame(controller: Controller) extends Frame {
       contents += anotherPlayer
       contents += selectSize
     }
-    listenTo(playerName, anotherPlayer, selectSize)
     reactions += {
       case EditDone(`playerName`) =>
         controller.addPlayerList(playerName.text)
         newGame()
       case ButtonClicked(b) =>
         if (b == anotherPlayer) {
-          controller.addPlayerList(playerName.text)
+//          controller.addPlayerList(playerName.text)
           newGame()
         } else if (b == selectSize) {
           showSizes()
         }
     }
-
   }
-
 
   def startGame(): Unit = {
-    //    new SwingGui(controller, 3, PlayerList(Nil))
-    //    this.close
-    showSizes()
+    new SwingGui(controller)
+    this.close
   }
 
-  val smallButton: Button = createButton("Small Playing Field")
-  val mediumButton: Button = createButton("Medium Playing Field")
-  val bigButton: Button = createButton("Big Playing Field")
-
   def showSizes(): Unit = {
+    val smallButton: Button = createButton("Small Playing Field")
+    val mediumButton: Button = createButton("Medium Playing Field")
+    val bigButton: Button = createButton("Big Playing Field")
+
     contents = new FlowPanel() {
       contents += smallButton
       contents += mediumButton
       contents += bigButton
     }
+
     listenTo(smallButton, mediumButton, bigButton)
     reactions += {
       case ButtonClicked(b) =>
         if (b == smallButton) {
-          new SwingGui(controller, 3, PlayerList(Nil))
+          controller.createEmptyGrid(5)
+          new SwingGui(controller)
+          this.close()
         } else if (b == mediumButton) {
-          new SwingGui(controller, 3, PlayerList(Nil))
+          controller.createEmptyGrid(10)
+          new SwingGui(controller)
+          this.close()
         } else if (b == bigButton) {
-          new SwingGui(controller, 3, PlayerList(Nil))
+          controller.createEmptyGrid(20)
+          new SwingGui(controller)
+          this.close()
         }
-        this.close()
     }
   }
 
-//  contents = new FlowPanel() {
-//    contents += newButton
-//    contents += loadButton
-//    contents += smallButton
-//    contents += mediumButton
-//    contents += bigButton
-//
-//  }
-//
-//  listenTo(newButton, loadButton, smallButton, mediumButton, bigButton)
-//
-//  reactions += {
-//    case ButtonClicked(b) =>
-//      if (b == newButton) {
-//        newGame()
-//      } else if (b == smallButton) {
-//        gridSize = 5
-//      } else if (b == mediumButton) {
-//        gridSize = 10
-//      } else if (b == bigButton) {
-//        gridSize = 20
-//      }
-//      println(gridSize)
-//      this.close()
-//    case event: StartGame =>
-//  }
-
-  def createButton(title: String): Button = {
+  def createButton(title: String, top: Int = 10, left: Int = 10, bottom: Int = 10, right: Int = 10): Button = {
     val button = new Button(title)
-    button.background = java.awt.Color.WHITE
+    button.background = java.awt.Color.lightGray
     button.foreground = java.awt.Color.BLACK
     button.focusable = false
-    button.border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+    button.font = new Font("Verdana", 20, 20)
+    button.border = BorderFactory.createEmptyBorder(top, left, bottom, right)
     visible = true
     button
   }
+
+  centerOnScreen()
+  visible = true
+  background = java.awt.Color.GRAY
 }

@@ -80,7 +80,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
 
   def cell(row: Int, col: Int): Cell = grid.cell(row, col)
 
-  def gridSize = grid.size
+  def gridSize: Int = grid.size
 
   def undo(): Unit = {
     undoManager.undoStep()
@@ -165,7 +165,6 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
           if (command.equals("removePlayer")) {
             setCell(row, col, grid.cell(row, col).removePlayer(Player(value)))
           }
-
         case _ =>
       }
     }
