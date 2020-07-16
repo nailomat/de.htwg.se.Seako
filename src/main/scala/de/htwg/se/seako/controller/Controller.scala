@@ -51,6 +51,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
 
   def addEnemy(row: Int, col: Int, enemy: String): Unit = {
     grid = grid.replaceCell(row, col, grid.cell(row, col).addEnemy(enemy))
+    publish(new ChangeEnemy)
     publish(new AddEnemy)
   }
 
@@ -74,6 +75,11 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
     publish(new CellChanged)
     grid = grid.replaceCell(position._1, position._2, grid.cell(position._1, position._2).removePlayer(name))
     publish(new CellChanged)
+  }
+
+  def amountEnemies(): (Int, Int, Int) = {
+    val position = grid.playerPos(playerList.getCurrentPlayer)
+    position._3.enemies.amountOfEnemys()
   }
 
   def attackEnemy(): Unit = {

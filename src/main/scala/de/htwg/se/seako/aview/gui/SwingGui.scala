@@ -1,6 +1,6 @@
 package de.htwg.se.seako.aview.gui
 
-import de.htwg.se.seako.controller.{CellChanged, Controller, GridSizeChanged, PlayerChanged}
+import de.htwg.se.seako.controller._
 import javax.swing.ImageIcon
 
 import scala.swing._
@@ -31,7 +31,6 @@ class SwingGui(controller: Controller) extends Frame {
     }
   }
 
-
   def createArrow(direction: String): Button = {
     val button = new Button("")
     direction match {
@@ -45,6 +44,14 @@ class SwingGui(controller: Controller) extends Frame {
     button
   }
 
+  def enemyAmount(enemy: String): Label = new Label {
+    enemy match {
+      case "zombie" => text = "Amount Zombies: " + controller.amountEnemies()._1.toString
+      case "mutant" => text = "Amount Mutant: " + controller.amountEnemies()._2.toString
+      case "boss" => text = "Amount Boss: " + controller.amountEnemies()._3.toString
+    }
+  }
+
   def menuPanel: FlowPanel = new FlowPanel() {
     listenTo(controller)
     background = java.awt.Color.WHITE
@@ -52,8 +59,42 @@ class SwingGui(controller: Controller) extends Frame {
     visible = true
     contents += currentPlayerIcon
     contents += currentPlayerLabel
+    contents += enemyPanel
     contents += controlPanel
     contents
+  }
+
+  def enemyPanel: FlowPanel = new FlowPanel() {
+    listenTo(controller)
+    val enemyIcon = new Label {
+      icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/Enemies.png")
+    }
+    val ZombieAmount = new Label {
+      text = "Amount Zombies: " + controller.amountEnemies()._1.toString
+    }
+    val MutantAmount = new Label {
+      text = "Amount Mutants: " +controller.amountEnemies()._2.toString
+    }
+    val BossAmount = new Label {
+      text = "Amount Boss: " + controller.amountEnemies()._3.toString
+    }
+    font = new Font("Verdana", 20, 40)
+    visible = true
+    contents += enemyIcon
+    contents += ZombieAmount
+    contents += MutantAmount
+    contents += BossAmount
+    reactions += {
+      case e : ChangeEnemy => {
+        println("asfawehlga")
+        contents.clear()
+        contents += enemyIcon
+        contents += enemyAmount("zombie")
+        contents += enemyAmount("mutant")
+        contents += enemyAmount("boss")
+        repaint
+      }
+    }
   }
 
   def controlPanel: GridBagPanel = new GridBagPanel() {
