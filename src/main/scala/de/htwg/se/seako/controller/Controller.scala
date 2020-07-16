@@ -82,12 +82,13 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
     position._3.enemies.amountOfEnemys()
   }
 
-  def attackEnemy(): Unit = {
+  def attackEnemy(): Dice = {
     val attackPower = new Dice
     val name = playerList.getCurrentPlayer
     val position = grid.playerPos(name)
     removeEnemy(position._1, position._2, grid.cell(position._1, position._2).attackEnemy(name, attackPower.rolldice))
     publish(new ChangeEnemy)
+    attackPower
   }
 
   def gridToString: String = grid.toString
