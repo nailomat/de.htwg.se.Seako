@@ -2,14 +2,7 @@ package de.htwg.se.seako.controller.GameState
 
 import de.htwg.se.seako.Seako.controller._
 
-object CreateSmallGame{
-  var state : Unit = _
-  def handle(e: State): Unit ={
-    e match {
-      case on: GameStateContext => state = createSmallGame
-    }
-    state
-  }
+object CreateSmallGameState{
 
   def createSmallGame:Unit = {
     val numberPlayers = playerList.players.size

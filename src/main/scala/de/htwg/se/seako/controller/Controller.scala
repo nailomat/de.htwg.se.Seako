@@ -1,19 +1,13 @@
 package de.htwg.se.seako.controller
 
-import de.htwg.se.seako.controller.GameState.GameStateContext
 import de.htwg.se.seako.model._
 import de.htwg.se.seako.util.UndoManager
 
 import scala.swing.Publisher
 
-class Controller(var grid: Grid[Cell], var playerList: PlayerList, var gameStateContext: GameStateContext) extends Publisher {
+class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publisher {
 
   val undoManager = new UndoManager
-
-
-  def startGame(input: String): Unit = {
-    gameStateContext.validateString(input)
-  }
 
   def addPlayerList(playerName: String): Unit = {
     playerList = playerList.addPlayer(Player(playerName))
@@ -94,9 +88,4 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList, var gameState
     undoManager.redoStep()
     publish(new CellChange)
   }
-
-  def validateLongString(input: String): Unit ={
-    gameStateContext.validateString(input)
-  }
-
 }

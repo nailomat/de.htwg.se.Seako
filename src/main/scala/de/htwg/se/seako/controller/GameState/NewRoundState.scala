@@ -4,19 +4,12 @@ import de.htwg.se.seako.model.Cell
 import de.htwg.se.seako.Seako.controller._
 import scala.util.Random
 
-object NewRound{
-  var state :Unit= _
-  def handle(e: State): Unit ={
-    e match {
-      case on: GameStateContext => state = newRound
-    }
-    state
-  }
+case class NewRoundState() extends State {
+
+  override def handle(e: State): State = newRound
 
 
-
-
-  def newRound:Unit = {
+  def newRound:State = {
    println("new Round")
     val tickets = 100
     val lottery = Random.nextInt(tickets)
@@ -41,5 +34,6 @@ object NewRound{
         setCell(a, b, grid.cell(a, b).addEnemy("boss"))
       }
     }
+    PlayerTurnState()
   }
 }
