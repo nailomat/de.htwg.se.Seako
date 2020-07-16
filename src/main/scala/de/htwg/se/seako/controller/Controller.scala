@@ -31,6 +31,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
   def nextPlayer(): Unit = {
     playerList = playerList.nextPlayer
     println("It's " + playerList.getCurrentPlayer + "'s turn")
+    publish(new PlayerChanged)
   }
 
   def createEmptyGrid(size: Int): Unit = {
@@ -120,7 +121,6 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
                 case _ => println("unknown size")
               }
             }
-
           if (splitInput(0).equals("np")) {
             nextPlayer()
           }

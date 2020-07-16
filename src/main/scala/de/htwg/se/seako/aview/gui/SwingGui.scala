@@ -1,6 +1,6 @@
 package de.htwg.se.seako.aview.gui
 
-import de.htwg.se.seako.controller.{CellChanged, Controller, GridSizeChanged}
+import de.htwg.se.seako.controller.{CellChanged, Controller, GridSizeChanged, PlayerChanged}
 import javax.swing.ImageIcon
 
 import scala.swing._
@@ -16,23 +16,30 @@ class SwingGui(controller: Controller) extends Frame {
 
   var cells = Array.ofDim[CellPanel](controller.gridSize, controller.gridSize)
 
-  val currentPlayerLabel: Label = new Label {
-    text = controller.playerList.players.head.name
+  val currentPlayerIcon: Label = new Label {
+    icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/CurrentPlayer.png")
   }
 
-  val upButton : Button = new Button {
-    val button = new Button("UP")
-    background = java.awt.Color.GREEN
-    foreground = java.awt.Color.BLUE
+  val currentPlayerLabel: Label = new Label {
+    listenTo(controller)
+    text = controller.playerList.players.head.name
+    font = new Font("Verdana", 20, 40)
     visible = true
-    button
+    reactions += {
+      case e : PlayerChanged => text = controller.playerList.players.head.name
+    }
+
   }
-  def menuPanel: FlowPanel = new FlowPanel() {
+
+  def menuPanel(): FlowPanel = new FlowPanel(){
     listenTo(controller)
     background = java.awt.Color.WHITE
     preferredSize = new Dimension (400, 800)
     visible = true
-
+    contents += currentPlayerIcon
+    contents += currentPlayerLabel
+    contents += controlPanel
+    contents
   }
 
   def createArrow(direction : String) : Button = {
@@ -85,7 +92,7 @@ class SwingGui(controller: Controller) extends Frame {
 
   contents = new BorderPanel {
     add(gridPanel, BorderPanel.Position.Center)
-    add(controlPanel, BorderPanel.Position.East)
+    add(menuPanel, BorderPanel.Position.East)
   }
 
   reactions += {
