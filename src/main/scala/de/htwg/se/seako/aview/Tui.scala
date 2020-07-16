@@ -13,7 +13,7 @@ class Tui(controller: Controller) extends Reactor {
       case "q" =>
       case "undo" => controller.undo()
       case "redo" => controller.redo()
-      case "start" => controller.startGame()
+      case "start" => controller.startGame(input)
       case _ => controller.validateLongString(input)
     }
   }

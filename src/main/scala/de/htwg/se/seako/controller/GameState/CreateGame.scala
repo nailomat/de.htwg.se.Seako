@@ -1,15 +1,31 @@
 package de.htwg.se.seako.controller.GameState
 
-case class CreateGame (gameSystem: GameSystem, stateRunner: StateRunner) extends State {
+import de.htwg.se.seako.Seako.controller._
+import de.htwg.se.seako.model.Cell
 
-  def changeState = {
-    stateRunner.off()
-    gameSystem.previousState = this
-    gameSystem.currentState = gameSystem.newRound
-  }
-  def displayState={
+object CreateGame extends State {
+  var state = createGame
+  override def handle(e: State): Unit ={
+    e match {
+      case CreateGame => state = createGame
+    }
+    createGame
   }
 
-  stateRunner.on()
+
+
+  def createGame:Unit = {
+        println("SELECT FIELD SIZE:")
+        println("small | medium | big")
+
+
+        createEmptyGrid(5)
+        for (numberPlayers <- playerList.players) {
+          setCell(0, 0, grid.cell(0, 0)
+            .addPlayer(playerList.getCurrentPlayer))
+        }
+
+    }
+
 
 }

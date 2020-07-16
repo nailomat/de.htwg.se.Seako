@@ -1,14 +1,22 @@
 package de.htwg.se.seako.controller.GameState
 
-case class EndGame(gameSystem: GameSystem, stateRunner: StateRunner) extends State {
+import de.htwg.se.seako.Seako.controller._
+import de.htwg.se.seako.model.Cell
 
-  def changeState = {
-    stateRunner.off()
-    gameSystem.previousState = this
-  }
-  def displayState={
+object EndGame extends State {
+  var state = endGame
+  override def handle(e: State): Unit ={
+    e match {
+      case EndGame => state = endGame
+    }
+    endGame
   }
 
-  stateRunner.on()
+
+
+
+  def endGame:Unit = {
+    println("THIS IS THE END")
+  }
 
 }

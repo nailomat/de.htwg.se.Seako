@@ -1,6 +1,6 @@
 package de.htwg.se.seako.model
 
-private class Zombie(health: Int = 1, attack: Int = 1) extends Enemy {
+private class Zombie(health: Int = 2, attack: Int = 1) extends Enemy {
 
   override def toString: String = "Z"
 

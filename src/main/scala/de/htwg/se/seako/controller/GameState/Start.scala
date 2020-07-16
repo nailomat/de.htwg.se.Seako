@@ -1,15 +1,24 @@
 package de.htwg.se.seako.controller.GameState
 
-case class Start(gameSystem: GameSystem, stateRunner: StateRunner) extends State {
+import de.htwg.se.seako.model.Cell
+import de.htwg.se.seako.Seako.controller._
 
-  def changeState = {
-    stateRunner.off()
-    gameSystem.previousState = this
-    gameSystem.currentState = gameSystem.insertPlayer
-  }
-  def displayState={
+object Start extends State {
+
+  var state = start
+  override def handle(e: State): Unit ={
+    e match {
+      case Start => state = start
+    }
+    start
   }
 
-  stateRunner.on()
+
+
+  def start:Unit = {
+    println("GAME HAS STARTED")
+    state = InsertPlayer
+  }
+
 
 }

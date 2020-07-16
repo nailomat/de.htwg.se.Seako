@@ -1,34 +1,22 @@
 package de.htwg.se.seako.controller
 
-import de.htwg.se.seako.controller.GameState._
-import de.htwg.se.seako.controller.GameStatus._
+import de.htwg.se.seako.controller.GameState.GameStateContext
 import de.htwg.se.seako.model._
 import de.htwg.se.seako.util.UndoManager
 
 import scala.swing.Publisher
 
-class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publisher {
-
-
-
+class Controller(var grid: Grid[Cell], var playerList: PlayerList, var gameStateContext: GameStateContext) extends Publisher {
 
   val undoManager = new UndoManager
 
 
-
-
-
-
-  def startGame(): Unit = {
-    println("GAME HAS STARTED")
-//    println("INSERT PLAYER  NAME:")
-
+  def startGame(input: String): Unit = {
+    gameStateContext.validateString(input)
   }
 
   def addPlayerList(playerName: String): Unit = {
     playerList = playerList.addPlayer(Player(playerName))
-    println("Add another player?")
-    println("y | n")
     println(playerList.getCurrentPlayer)
   }
 
@@ -107,96 +95,8 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
     publish(new CellChange)
   }
 
-  def validateLongString(input: String): Unit = {
-
-    val gameSystem: GameSystem = GameSystem(new Controller(grid, playerList), input: String)
-    while (true) {
-      gameSystem.displayState()
-      if (input.nonEmpty) {
-        if (gameSystem.currentState.isInstanceOf[InsertPlayer]) {
-          if (input == "ready") {
-            gameSystem.changeState()
-          }
-        }
-        if (gameSystem.currentState.isInstanceOf[CreateGame]) {
-          gameSystem.changeState()
-        }
-        if (gameSystem.currentState.isInstanceOf[NewRound]) {
-          gameSystem.changeState()
-        }
-        if (gameSystem.currentState.isInstanceOf[PlayerTurn]) {
-          gameSystem.changeState()
-        }
-        if (gameSystem.currentState.isInstanceOf[EnemyTurn]) {
-          gameSystem.changeState()
-        }
-        if (gameSystem.currentState.isInstanceOf[EndGame]) {
-          false
-        }
-      }
-    }
-
-    if (input.nonEmpty) {
-      val splitInput = input.split(" ")
-      splitInput.length match {
-        case 1 =>
-          if (splitInput(0).equals("np")) {
-            nextPlayer()
-          }
-          if (splitInput(0).equals("attack")) {
-            attackEnemy()
-          }
-        case 2 =>
-          val command = splitInput(0)
-          val value = splitInput(1)
-          command match {
-            case "move" =>
-              movePlayer(value)
-            case _ =>
-          }
-        case 3 =>
-          val command = splitInput(0)
-          val row = splitInput(1)
-          val col = splitInput(2)
-          command match {
-            case "addCurrentPlayer" =>
-              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
-                .addPlayer(playerList.getCurrentPlayer))
-            case "addZombie" =>
-              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
-                .addEnemy("zombie"))
-            case "addMutant" =>
-              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
-                .addEnemy("mutant"))
-            case "addBoss" =>
-              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
-                .addEnemy("boss"))
-            case "removeZombie" =>
-              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
-                .removeEnemy(Some("zombie")))
-            case "removeMutant" =>
-              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
-                .removeEnemy(Some("mutant")))
-            case "removeBoss" =>
-              setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
-                .removeEnemy(Some("boss")))
-            case _ =>
-          }
-        case 4 =>
-          val command = splitInput(0)
-          val row = splitInput(1).toInt
-          val col = splitInput(2).toInt
-          val value = splitInput(3)
-          if (command.equals("addPlayer")) {
-            addPlayer(row, col, value)
-          }
-          if (command.equals("removePlayer")) {
-            setCell(row, col, grid.cell(row, col).removePlayer(Player(value)))
-          }
-
-        case _ =>
-      }
-    }
+  def validateLongString(input: String): Unit ={
+    gameStateContext.validateString(input)
   }
 
 }

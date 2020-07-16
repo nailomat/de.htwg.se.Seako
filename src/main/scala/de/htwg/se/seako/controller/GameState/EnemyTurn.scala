@@ -1,15 +1,22 @@
 package de.htwg.se.seako.controller.GameState
 
-case class EnemyTurn(gameSystem: GameSystem, stateRunner: StateRunner) extends State {
+import de.htwg.se.seako.Seako.controller._
+import de.htwg.se.seako.model.Cell
 
-  def changeState = {
-    stateRunner.off()
-    gameSystem.previousState = this
-    gameSystem.currentState = gameSystem.newRound
-  }
-  def displayState={
+object EnemyTurn extends State {
+  var state = enemyTurn
+  override def handle(e: State): Unit ={
+    e match {
+      case EnemyTurn => state = enemyTurn
+    }
+    enemyTurn
   }
 
-  stateRunner.on()
+
+
+
+  def enemyTurn:Unit = {
+
+  }
 
 }
