@@ -153,6 +153,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
                 .removeEnemy("boss"))
             case "move" =>
               movePlayer(row, col)
+              publish(new CellChanged)
             case _ =>
           }
         case 4 =>

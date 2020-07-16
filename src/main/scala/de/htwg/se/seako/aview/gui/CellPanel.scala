@@ -1,6 +1,6 @@
 package de.htwg.se.seako.aview.gui
 
-import de.htwg.se.seako.controller.Controller
+import de.htwg.se.seako.controller.{CellChanged, Controller}
 import de.htwg.se.seako.model.Cell
 import javax.swing.ImageIcon
 
@@ -26,36 +26,32 @@ class CellPanel(row: Int, col: Int, controller: Controller) extends FlowPanel {
     cellType
   }
 
-  def setCell(): Label = {
+  val cell: BoxPanel = new BoxPanel(Orientation.Vertical) {
     val label: Label = new Label
-    myCellType match {
-      case "fog" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/FogCell.png")
-      case "field" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/fieldCell.PNG")
-      case "terrain" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/avíew/media/MountainCell.png")
-      case "player" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/SelectPlayerCell.PNG")
+    label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/FogCell.png")
+    preferredSize = new Dimension(80, 80)
+    visible = true
+    listenTo(controller)
+    reactions += {
+      case e : CellChanged => {
+        myCellType match {
+          case "fog" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/FogCell.png")
+          case "field" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/fieldCell.PNG")
+          case "terrain" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/avíew/media/MountainCell.png")
+          case "player" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/SelectPlayerCell.PNG")
+        }
+      }
     }
-    preferredSize = new Dimension(80, 80)
-    visible = true
-    listenTo(mouse.clicks)
-    listenTo(controller)
-    label
-  }
-
-  val playerCell: BoxPanel = new BoxPanel(Orientation.Vertical) {
-    val label: Label = new Label
-    label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/SelectPlayerCell.PNG")
-    preferredSize = new Dimension(80, 80)
-    visible = true
-    listenTo(controller)
     contents += label
   }
 
+  contents += cell
 
   def redraw(): Unit = {
-
     contents.clear()
-    val cell = setCell()
-    contents += playerCell
+    //val cell = cell
+    println(myCellType)
+    contents += cell
     repaint()
   }
 
