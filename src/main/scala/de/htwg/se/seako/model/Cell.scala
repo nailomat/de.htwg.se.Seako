@@ -71,6 +71,11 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
 
   }
 
+  def setFogValue(value: Int): Cell = {
+    val newFog = Fog(value)
+    this.copy(fog = newFog)
+  }
+
   def topRow(): String = "⌈          ⌉"
 
   def fogTopRow(): String = "⌈■■■■■■■■■■⌉"
