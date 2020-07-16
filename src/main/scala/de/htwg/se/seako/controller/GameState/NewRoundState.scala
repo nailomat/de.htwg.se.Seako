@@ -34,6 +34,6 @@ case class NewRoundState() extends State {
         setCell(a, b, grid.cell(a, b).addEnemy("boss"))
       }
     }
-    PlayerTurnState()
+    GameStateContext.handle(WaitForInputState())
   }
 }

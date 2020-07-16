@@ -1,6 +1,6 @@
 package de.htwg.se.seako.aview
 
-import de.htwg.se.seako.controller.GameState.{CreateBigGameState, CreateGameState, CreateMediumGameState, CreateSmallGameState, GameStateContext, InsertPlayerState, NewRoundState, PlayerTurnState, StartState}
+import de.htwg.se.seako.controller.GameState.{CreateGameState, GameStateContext, InsertPlayerState, NewRoundState, PlayerTurnState, StartState, WaitForInputState}
 import de.htwg.se.seako.controller._
 import de.htwg.se.seako.model.Player
 
@@ -15,7 +15,6 @@ class Tui(controller: Controller) extends Reactor {
       case "q" =>
       case "undo" => controller.undo()
       case "redo" => controller.redo()
-      case "start" => GameStateContext.handle(new StartState)
       case _ => validateLongString(input)
     }
   }
@@ -26,28 +25,30 @@ class Tui(controller: Controller) extends Reactor {
         splitInput(0) match {
           case "start" =>
             GameStateContext.handle(new StartState)
+            GameStateContext.handle(WaitForInputState())
           case "y" =>
             GameStateContext.handle(InsertPlayerState(input))
+            GameStateContext.handle(WaitForInputState())
           case "n" =>
             GameStateContext.handle(CreateGameState(input))
-          case _ =>
-            GameStateContext.handle(InsertPlayerState(input))
+            GameStateContext.handle(WaitForInputState())
           case "small" =>
             GameStateContext.handle(CreateGameState(input))
           case "medium" =>
             GameStateContext.handle(CreateGameState(input))
           case "big"=>
             GameStateContext.handle(CreateGameState(input))
-
-
           case _ =>
-            println("unknown size")
+            if (GameStateContext.state == GameStateContext.handle(WaitForInputState())){
+              GameStateContext.handle(InsertPlayerState(input))
+            }
+
         }
         if (splitInput(0).equals("np")) {
           controller.nextPlayer()
         }
         if (splitInput(0).equals("attack")) {
-          GameStateContext.handle(PlayerTurnState())
+          GameStateContext.handle(PlayerTurnState(input))
         }
         GameStateContext
       case 2 =>
