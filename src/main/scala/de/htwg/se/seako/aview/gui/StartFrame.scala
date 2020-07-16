@@ -52,7 +52,6 @@ class StartFrame(controller: Controller) extends Frame {
   }
 
   def newGame(): Unit = {
-    //    object playerName extends TextField {columns = 10}
     val playerName: TextField = new TextField(columns = 10)
     val playerNo = controller.playerList.players.size + 1
     val anotherPlayer: Button = createButton("Add another Player")
@@ -71,7 +70,7 @@ class StartFrame(controller: Controller) extends Frame {
         newGame()
       case ButtonClicked(b) =>
         if (b == anotherPlayer) {
-//          controller.addPlayerList(playerName.text)
+          controller.addPlayerList(playerName.text)
           newGame()
         } else if (b == selectSize) {
           showSizes()

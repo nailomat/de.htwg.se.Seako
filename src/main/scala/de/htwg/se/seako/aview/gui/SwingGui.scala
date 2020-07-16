@@ -4,6 +4,7 @@ import de.htwg.se.seako.controller.{CellChanged, Controller, GridSizeChanged, Pl
 import javax.swing.ImageIcon
 
 import scala.swing._
+import scala.swing.event.ButtonClicked
 
 class SwingGui(controller: Controller) extends Frame {
 
@@ -26,23 +27,12 @@ class SwingGui(controller: Controller) extends Frame {
     font = new Font("Verdana", 20, 40)
     visible = true
     reactions += {
-      case e : PlayerChanged => text = controller.playerList.players.head.name
+      case e: PlayerChanged => text = controller.playerList.players.head.name
     }
-
   }
 
-  def menuPanel(): FlowPanel = new FlowPanel(){
-    listenTo(controller)
-    background = java.awt.Color.WHITE
-    preferredSize = new Dimension (400, 800)
-    visible = true
-    contents += currentPlayerIcon
-    contents += currentPlayerLabel
-    contents += controlPanel
-    contents
-  }
 
-  def createArrow(direction : String) : Button = {
+  def createArrow(direction: String): Button = {
     val button = new Button("")
     direction match {
       case "up" => button.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/UpArrow.png")
@@ -53,6 +43,17 @@ class SwingGui(controller: Controller) extends Frame {
     button.contentAreaFilled = false
     button.preferredSize = new Dimension(80, 80)
     button
+  }
+
+  def menuPanel: FlowPanel = new FlowPanel() {
+    listenTo(controller)
+    background = java.awt.Color.WHITE
+    preferredSize = new Dimension(400, 800)
+    visible = true
+    contents += currentPlayerIcon
+    contents += currentPlayerLabel
+    contents += controlPanel
+    contents
   }
 
   def controlPanel: GridBagPanel = new GridBagPanel() {
@@ -75,6 +76,16 @@ class SwingGui(controller: Controller) extends Frame {
     add(downButton, gbc)
     gbc.gridx = 6
     add(rightButton, gbc)
+    reactions += {
+      case ButtonClicked(b) =>
+        b match {
+          case upButton => controller.movePlayer(controller.playerList.players.head.name, "up")
+          case downButton => controller.movePlayer(controller.playerList.players.head.name, "down")
+          case rightButton => controller.movePlayer(controller.playerList.players.head.name, "right")
+          case leftButton => controller.movePlayer(controller.playerList.players.head.name,"left")
+
+        }
+    }
   }
 
   def gridPanel: GridPanel = new GridPanel(controller.grid.size, controller.grid.size) {
