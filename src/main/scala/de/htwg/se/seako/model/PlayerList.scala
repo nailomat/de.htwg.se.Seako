@@ -27,5 +27,4 @@ case class PlayerList(players: List[Player]) {
   }
 
 
-
 }

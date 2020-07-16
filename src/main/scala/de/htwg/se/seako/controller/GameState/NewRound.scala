@@ -4,13 +4,13 @@ import de.htwg.se.seako.model.Cell
 import de.htwg.se.seako.Seako.controller._
 import scala.util.Random
 
-object NewRound extends State {
-  var state = newRound
-  override def handle(e: State): Unit ={
+object NewRound{
+  var state :Unit= _
+  def handle(e: State): Unit ={
     e match {
-      case NewRound => state = newRound
+      case on: GameStateContext => state = newRound
     }
-    newRound
+    state
   }
 
 

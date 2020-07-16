@@ -3,53 +3,57 @@ package de.htwg.se.seako.controller.GameState
 import de.htwg.se.seako.model.Player
 import de.htwg.se.seako.Seako.controller._
 
+import scala.swing.event.Event
 
-class GameStateContext {
-  var state: State = _
 
-  def validateString(input: String): Unit = {
+case class GameStateContext() extends State {
+
+  override def validateString(input: String): State = {
+
     val splitInput = input.split(" ")
-    println(state)
     splitInput.length match {
       case 1 =>
         splitInput(0) match {
           case "start" =>
-            state = Start
-          case "small" if state == CreateGame =>
-            state = CreateSmallGame
-            state = NewRound
-          case "medium" if state == CreateGame =>
-            state = CreateMediumGame
-            state = NewRound
-          case "big" if state == CreateGame =>
-            state = CreateBigGame
-            state = NewRound
-          case "y" if state ==  InsertPlayer =>
-            state = InsertPlayer
-          case "n" if state ==  InsertPlayer =>
-            state = CreateGame
-          case _ if state == InsertPlayer =>
+            Start.handle(GameStateContext())
+          case "small" =>
+            CreateSmallGame.handle(GameStateContext())
+            NewRound.handle(GameStateContext())
+          case "medium" =>
+            CreateMediumGame.handle(GameStateContext())
+            NewRound.handle(GameStateContext())
+          case "big"=>
+            CreateBigGame.handle(GameStateContext())
+            NewRound.handle(GameStateContext())
+          case "y" =>
+           InsertPlayer.handle(GameStateContext())
+          case "n" =>
+            CreateGame.handle(GameStateContext())
+          case _ =>
             addPlayerList(splitInput(0))
             println(playerList)
             println("Add another player?")
             println("y | n")
 
-          case _ if state == CreateGame =>
+          case _ =>
             println("unknown size")
         }
         if (splitInput(0).equals("np")) {
           nextPlayer()
         }
         if (splitInput(0).equals("attack")) {
-          attackEnemy()
-        }
+          PlayerTurn.handle(GameStateContext())
+         }
+        GameStateContext()
       case 2 =>
         val command = splitInput(0)
         val value = splitInput(1)
         command match {
           case "move" =>
             movePlayer(value)
+            GameStateContext()
           case _ =>
+            GameStateContext()
         }
       case 3 =>
         val command = splitInput(0)
@@ -59,25 +63,33 @@ class GameStateContext {
           case "addCurrentPlayer" =>
             setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
               .addPlayer(playerList.getCurrentPlayer))
+            GameStateContext()
           case "addZombie" =>
             setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
               .addEnemy("zombie"))
+            GameStateContext()
           case "addMutant" =>
             setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
               .addEnemy("mutant"))
+            GameStateContext()
           case "addBoss" =>
             setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
               .addEnemy("boss"))
+            GameStateContext()
           case "removeZombie" =>
             setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
               .removeEnemy(Some("zombie")))
+            GameStateContext()
           case "removeMutant" =>
             setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
               .removeEnemy(Some("mutant")))
+            GameStateContext()
           case "removeBoss" =>
             setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
               .removeEnemy(Some("boss")))
+            GameStateContext()
           case _ =>
+            GameStateContext()
         }
       case 4 =>
         val command = splitInput(0)
@@ -90,8 +102,9 @@ class GameStateContext {
         if (command.equals("removePlayer")) {
           setCell(row, col, grid.cell(row, col).removePlayer(Player(value)))
         }
+        GameStateContext()
 
-      case _ =>
+      case _ => GameStateContext()
     }
   }
 

@@ -2,13 +2,13 @@ package de.htwg.se.seako.controller.GameState
 
 import de.htwg.se.seako.Seako.controller._
 
-object CreateBigGame extends State {
-    var state = createBigGame
-    override def handle(e: State): Unit ={
+object CreateBigGame {
+    var state: Unit = _
+    def handle(e: State): Unit ={
       e match {
-        case CreateBigGame => state = createBigGame
+        case on: GameStateContext => state = createBigGame
       }
-      createBigGame
+      state
     }
 
 

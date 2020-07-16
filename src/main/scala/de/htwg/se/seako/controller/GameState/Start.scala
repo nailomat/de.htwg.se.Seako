@@ -3,17 +3,15 @@ package de.htwg.se.seako.controller.GameState
 import de.htwg.se.seako.model.Cell
 import de.htwg.se.seako.Seako.controller._
 
-object Start extends State {
+object Start {
 
-  var state = start
-  override def handle(e: State): Unit ={
-    e match {
-      case Start => state = start
+  var state: Unit = _
+  def handle(e: State): Unit ={
+    e match{
+    case on: GameStateContext => state = start
     }
-    start
+    state
   }
-
-
 
   def start:Unit = {
     println("GAME HAS STARTED")
