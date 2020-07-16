@@ -11,7 +11,6 @@ class StartFrame(controller: Controller) extends Frame {
   listenTo(controller)
   title = "Seako"
   preferredSize = new Dimension(800, 800)
-//  background = java.awt.Color.LIGHT_GRAY
 
   val seako: Label = new Label() {
     icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/seako.PNG")

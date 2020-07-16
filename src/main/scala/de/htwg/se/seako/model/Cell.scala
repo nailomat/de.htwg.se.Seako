@@ -24,17 +24,19 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
     this.copy(enemies = tempEnemy)
   }
 
-
   def addPlayer(player: Player): Cell = {
     val newPlayers = players :+ player
     this.copy(players = newPlayers)
   }
 
-
-
   def removePlayer(player: Player): Cell = {
     val newPlayers = players.filterNot(players => players == player)
     this.copy(players = newPlayers)
+  }
+
+  def setFogValue(value: Int): Cell = {
+    val newFog = Fog(value)
+    this.copy(fog = newFog)
   }
 
   def topRow(): String = "⌈          ⌉"

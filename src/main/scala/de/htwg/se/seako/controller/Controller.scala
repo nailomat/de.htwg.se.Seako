@@ -131,7 +131,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
           command match {
             case "addCurrentPlayer" =>
               setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
-                .addPlayer(playerList.getCurrentPlayer))
+                .addPlayer(playerList.getCurrentPlayer).setFogValue(0))
               publish(new CellChanged)
             case "addZombie" =>
               setCell(row.toInt, col.toInt, grid.cell(row.toInt, col.toInt)
