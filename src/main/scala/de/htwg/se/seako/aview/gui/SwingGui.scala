@@ -57,7 +57,6 @@ class SwingGui(controller: Controller) extends Frame {
   }
 
   def controlPanel: GridBagPanel = new GridBagPanel() {
-    listenTo(controller)
     background = java.awt.Color.WHITE
     preferredSize = new Dimension(400, 400)
     visible = true
@@ -78,13 +77,17 @@ class SwingGui(controller: Controller) extends Frame {
     add(rightButton, gbc)
     reactions += {
       case ButtonClicked(b) =>
-        b match {
-          case upButton => controller.movePlayer(controller.playerList.players.head.name, "up")
-          case downButton => controller.movePlayer(controller.playerList.players.head.name, "down")
-          case rightButton => controller.movePlayer(controller.playerList.players.head.name, "right")
-          case leftButton => controller.movePlayer(controller.playerList.players.head.name,"left")
+        if (b == upButton) {
+          controller.movePlayer("up")
+        } else if (b == downButton) {
+          controller.movePlayer("down")
+        } else if (b == rightButton) {
+          controller.movePlayer("right")
+        } else if (b == leftButton) {
+          controller.movePlayer("left")
         }
     }
+    listenTo(controller, upButton, downButton, leftButton, rightButton)
   }
 
   def gridPanel: GridPanel = new GridPanel(controller.grid.size, controller.grid.size) {

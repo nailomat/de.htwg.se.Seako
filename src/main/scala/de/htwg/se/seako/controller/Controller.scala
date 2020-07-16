@@ -4,7 +4,6 @@ import de.htwg.se.seako.controller.GameStatus._
 import de.htwg.se.seako.model._
 import de.htwg.se.seako.util.UndoManager
 
-import scala.swing.Dialog.Options
 import scala.swing.Publisher
 
 class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publisher {
@@ -72,6 +71,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
     val name = playerList.getCurrentPlayer
     val position = grid.playerPos(name)
     grid = grid.replaceCell(grid.movePlayer(name,direction)._1, grid.movePlayer(name, direction)._2, grid.cell(grid.movePlayer(name,direction)._1, grid.movePlayer(name, direction)._2).addPlayer(name))
+    publish(new CellChanged)
     grid = grid.replaceCell(position._1, position._2, grid.cell(position._1, position._2).removePlayer(name))
     publish(new CellChanged)
   }

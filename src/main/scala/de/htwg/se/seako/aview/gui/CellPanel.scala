@@ -12,15 +12,13 @@ class CellPanel(row: Int, col: Int, controller: Controller) extends FlowPanel {
 
   def myCellType: String = {
     var cellType = ""
-    if (myCell.fog.value == 1) {
+    if (myCell.players.nonEmpty) {
+      cellType = "player"
+    } else if (myCell.fog.value == 1) {
       cellType = "fog"
     } else {
       if (myCell.terrain.value == 1) {
         cellType = "terrain"
-      } else {
-        if (myCell.players.nonEmpty) {
-          cellType = "player"
-        }
       }
     }
     cellType
