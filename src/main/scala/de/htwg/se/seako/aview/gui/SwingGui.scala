@@ -83,7 +83,6 @@ class SwingGui(controller: Controller) extends Frame {
           case downButton => controller.movePlayer(controller.playerList.players.head.name, "down")
           case rightButton => controller.movePlayer(controller.playerList.players.head.name, "right")
           case leftButton => controller.movePlayer(controller.playerList.players.head.name,"left")
-
         }
     }
   }

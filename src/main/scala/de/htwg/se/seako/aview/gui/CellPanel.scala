@@ -34,11 +34,13 @@ class CellPanel(row: Int, col: Int, controller: Controller) extends FlowPanel {
     listenTo(controller)
     reactions += {
       case e : CellChanged => {
+        println(myCellType)
         myCellType match {
           case "fog" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/FogCell.png")
           case "field" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/fieldCell.PNG")
           case "terrain" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/avíew/media/MountainCell.png")
           case "player" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/SelectPlayerCell.PNG")
+          case _ => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/MountainCell.png")
         }
       }
     }

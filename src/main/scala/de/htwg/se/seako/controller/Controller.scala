@@ -68,6 +68,7 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
   def movePlayer(name: String, direction: String): Unit = {
     val position = grid.playerPos(Player(name))
     grid = grid.replaceCell(grid.movePlayer(Player(name),direction)._1, grid.movePlayer(Player(name), direction)._2, grid.cell(grid.movePlayer(Player(name),direction)._1, grid.movePlayer(Player(name), direction)._2).addPlayer(Player(name)))
+    publish(new CellChanged)
     grid = grid.replaceCell(position._1, position._2, grid.cell(position._1, position._2).removePlayer(Player(name)))
     publish(new CellChanged)
   }
