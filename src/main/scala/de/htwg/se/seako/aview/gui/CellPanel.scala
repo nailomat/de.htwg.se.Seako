@@ -31,7 +31,7 @@ class CellPanel(row: Int, col: Int, controller: Controller) extends FlowPanel {
     visible = true
     listenTo(controller)
     reactions += {
-      case e : CellChanged => {
+      case e: CellChanged => {
         myCellType match {
           case "fog" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/FogCell.png")
           case "field" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/fieldCell.PNG")
