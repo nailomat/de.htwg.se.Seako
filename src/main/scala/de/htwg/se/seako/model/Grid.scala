@@ -32,20 +32,40 @@ case class Grid[T](rows: Vector[Vector[T]]) {
     var newCol = position._2
     direction match {
       case "up" =>
-        newRow = position._1 - 1
-        newCol = position._2
+        if (position._1 == 0){
+          newRow = position._1
+          newCol = position._2
+        } else {
+          newRow = position._1 - 1
+          newCol = position._2
+        }
         (newRow,newCol)
       case "down" =>
-        newRow = position._1 + 1
-        newCol = position._2
+        if (position._1 == size){
+          newRow = position._1
+          newCol = position._2
+        } else {
+          newRow = position._1 + 1
+          newCol = position._2
+        }
         (newRow,newCol)
       case "right" =>
-        newRow = position._1
-        newCol = position._2 + 1
+        if (position._1 == size){
+          newRow = position._1
+          newCol = position._2
+        } else {
+          newRow = position._1
+          newCol = position._2 + 1
+        }
         (newRow,newCol)
       case "left" =>
-        newRow = position._1
-        newCol = position._2 - 1
+        if( position._2 == 0){
+          newRow = position._1
+          newCol = position._2
+        } else {
+          newRow = position._1
+          newCol = position._2 - 1
+        }
         (newRow,newCol)
     }
   }
