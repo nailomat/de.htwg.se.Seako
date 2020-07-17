@@ -11,6 +11,10 @@ class DiceSpec extends WordSpec with Matchers{
         defaultDice.max should be(6)
         1 to 6 contains defaultDice.rolldice
       }
+      "if I roll the Dice" in {
+        val rollingDice = defaultDice.rolldice
+        1 to 6 contains rollingDice
+      }
     }
     "if min or max is Set to different value" should {
       val diceSet = Dice(0,8)
