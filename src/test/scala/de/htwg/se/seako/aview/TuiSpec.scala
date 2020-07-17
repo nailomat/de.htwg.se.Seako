@@ -1,10 +1,9 @@
 package de.htwg.se.seako.aview
 
-import de.htwg.se.seako.controller.Controller
-import de.htwg.se.seako.model._
 import org.scalatest.{Matchers, WordSpec}
 
 class TuiSpec extends WordSpec with Matchers{
+  /*
   "A Seako Tui" should {
     val controller = new Controller(new Grid[Cell](5,Cell(Nil, Enemies(Nil),Terrain(0),Fog(1))), PlayerList(Nil))
     val tui = new Tui(controller)
@@ -40,5 +39,5 @@ class TuiSpec extends WordSpec with Matchers{
       tui.processInputLine("q") should be ()
     }
   }
-
+*/
 }

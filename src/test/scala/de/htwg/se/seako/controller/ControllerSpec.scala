@@ -80,8 +80,6 @@ class ControllerSpec extends WordSpec with Matchers{
       controller.validateLongString("y")
       controller.validateLongString("n")
       controller.validateLongString("small")
-      controller.validateLongString("medium")
-      controller.validateLongString("big")
       controller.validateLongString("np")
       controller.validateLongString("attack")
       controller.validateLongString("move down")
