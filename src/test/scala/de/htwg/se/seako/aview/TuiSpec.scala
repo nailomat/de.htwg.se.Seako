@@ -41,9 +41,6 @@ class TuiSpec extends WordSpec with Matchers {
     "an empty input would be everything else" in {
       tui.processInputLine("") should be()
     }
-    "exit on input 'q'" in {
-      tui.processInputLine("q") should be()
-    }
   }
 
 }
