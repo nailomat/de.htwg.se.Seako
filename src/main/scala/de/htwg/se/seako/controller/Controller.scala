@@ -60,14 +60,6 @@ class Controller(var grid: Grid[Cell], var playerList: PlayerList) extends Publi
     publish(new RemoveZombie)
   }
 
-
-  //FUNKTION IS NOT USED! ONLY FOR TEST PURPOSE
-  def getPlayerPos(name: String): Unit = {
-    val currentcell = grid.playerPos(Player(name))
-    println("Player " + name + " is Currently on " + currentcell)
-    //notifyObservers()
-  }
-
   def movePlayer(direction: String): Unit = {
     val name = playerList.getCurrentPlayer
     val position = grid.playerPos(name)
