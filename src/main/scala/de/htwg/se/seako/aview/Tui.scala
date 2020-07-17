@@ -19,13 +19,9 @@ class Tui(controller: Controller) extends Reactor {
   }
 
   reactions += {
-    case event: SetGrid => print(controller.gridToString)
     case event: GridSizeChanged => println(controller.gridToString)
     case event: CellChanged => print(controller.gridToString)
     case event: AddPlayer => print(controller.gridToString)
-    case event: RemovePlayer => print(controller.gridToString)
-    case event: AddEnemy => print(controller.gridToString)
-    case event: RemoveEnemy => print(controller.gridToString)
     case event: ChangeEnemy => print(controller.gridToString)
   }
 }
