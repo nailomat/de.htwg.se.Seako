@@ -31,8 +31,7 @@ class CellPanel(row: Int, col: Int, controller: Controller) extends FlowPanel {
     visible = true
     listenTo(controller)
     reactions += {
-      case e : CellChanged => {
-        println(myCellType)
+      case e: CellChanged => {
         myCellType match {
           case "fog" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/FogCell.png")
           case "field" => label.icon = new ImageIcon("./src/main/scala/de/htwg/se/Seako/aview/media/fieldCell.PNG")
@@ -50,7 +49,6 @@ class CellPanel(row: Int, col: Int, controller: Controller) extends FlowPanel {
   def redraw(): Unit = {
     contents.clear()
     //val cell = cell
-    println(myCellType)
     contents += cell
     repaint()
   }
