@@ -67,8 +67,6 @@ case class Cell(players: List[Player], enemies: Enemies, terrain: Terrain, fog: 
       case (0, 0, 0) =>
         None
     }
-
-
   }
 
   def setFogValue(value: Int): Cell = {

@@ -3,6 +3,7 @@ package de.htwg.se.seako.model
 import scala.collection.mutable.ListBuffer
 
 trait Enemy{
+  def toString: String
   def isAlive: Boolean
   def getHealth: Integer
   def getAttack: Integer
